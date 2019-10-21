@@ -55,5 +55,58 @@ class Inscripto
      */
     private $persona;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getFechaInsc(): ?\DateTimeInterface
+    {
+        return $this->fechaInsc;
+    }
+
+    public function setFechaInsc(?\DateTimeInterface $fechaInsc): self
+    {
+        $this->fechaInsc = $fechaInsc;
+
+        return $this;
+    }
+
+    public function getEstado(): ?int
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(?int $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getEvento(): ?Evento
+    {
+        return $this->evento;
+    }
+
+    public function setEvento(?Evento $evento): self
+    {
+        $this->evento = $evento;
+
+        return $this;
+    }
+
+    public function getPersona(): ?Persona
+    {
+        return $this->persona;
+    }
+
+    public function setPersona(?Persona $persona): self
+    {
+        $this->persona = $persona;
+
+        return $this;
+    }
+
 
 }

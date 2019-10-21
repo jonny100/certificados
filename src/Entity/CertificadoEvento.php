@@ -51,5 +51,46 @@ class CertificadoEvento
      */
     private $template;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCertificado(): ?Certificado
+    {
+        return $this->certificado;
+    }
+
+    public function setCertificado(?Certificado $certificado): self
+    {
+        $this->certificado = $certificado;
+
+        return $this;
+    }
+
+    public function getEvento(): ?Evento
+    {
+        return $this->evento;
+    }
+
+    public function setEvento(?Evento $evento): self
+    {
+        $this->evento = $evento;
+
+        return $this;
+    }
+
+    public function getTemplate(): ?Template
+    {
+        return $this->template;
+    }
+
+    public function setTemplate(?Template $template): self
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
 
 }

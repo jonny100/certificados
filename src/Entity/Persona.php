@@ -77,5 +77,106 @@ class Persona
      */
     private $estado = '1';
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getApellidoNombre(): ?string
+    {
+        return $this->apellidoNombre;
+    }
+
+    public function setApellidoNombre(?string $apellidoNombre): self
+    {
+        $this->apellidoNombre = $apellidoNombre;
+
+        return $this;
+    }
+
+    public function getDni(): ?string
+    {
+        return $this->dni;
+    }
+
+    public function setDni(?string $dni): self
+    {
+        $this->dni = $dni;
+
+        return $this;
+    }
+
+    public function getDireccion(): ?string
+    {
+        return $this->direccion;
+    }
+
+    public function setDireccion(?string $direccion): self
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getTelefono(): ?string
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono(?string $telefono): self
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    public function getSexo(): ?string
+    {
+        return $this->sexo;
+    }
+
+    public function setSexo(?string $sexo): self
+    {
+        $this->sexo = $sexo;
+
+        return $this;
+    }
+
+    public function getFechaNac(): ?\DateTimeInterface
+    {
+        return $this->fechaNac;
+    }
+
+    public function setFechaNac(?\DateTimeInterface $fechaNac): self
+    {
+        $this->fechaNac = $fechaNac;
+
+        return $this;
+    }
+
+    public function getEstado(): ?int
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(?int $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
 
 }

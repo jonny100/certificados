@@ -41,5 +41,34 @@ class CertificadoEventoRequisito
      */
     private $requisito;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCertificadoEvento(): ?CertificadoEvento
+    {
+        return $this->certificadoEvento;
+    }
+
+    public function setCertificadoEvento(?CertificadoEvento $certificadoEvento): self
+    {
+        $this->certificadoEvento = $certificadoEvento;
+
+        return $this;
+    }
+
+    public function getRequisito(): ?Requisito
+    {
+        return $this->requisito;
+    }
+
+    public function setRequisito(?Requisito $requisito): self
+    {
+        $this->requisito = $requisito;
+
+        return $this;
+    }
+
 
 }

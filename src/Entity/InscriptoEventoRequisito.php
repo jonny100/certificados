@@ -48,5 +48,46 @@ class InscriptoEventoRequisito
      */
     private $inscripto;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getExcluir(): ?bool
+    {
+        return $this->excluir;
+    }
+
+    public function setExcluir(?bool $excluir): self
+    {
+        $this->excluir = $excluir;
+
+        return $this;
+    }
+
+    public function getCertificadoEventoRequisito(): ?CertificadoEventoRequisito
+    {
+        return $this->certificadoEventoRequisito;
+    }
+
+    public function setCertificadoEventoRequisito(?CertificadoEventoRequisito $certificadoEventoRequisito): self
+    {
+        $this->certificadoEventoRequisito = $certificadoEventoRequisito;
+
+        return $this;
+    }
+
+    public function getInscripto(): ?Inscripto
+    {
+        return $this->inscripto;
+    }
+
+    public function setInscripto(?Inscripto $inscripto): self
+    {
+        $this->inscripto = $inscripto;
+
+        return $this;
+    }
+
 
 }

@@ -73,5 +73,94 @@ class Evento
      */
     private $tipoEvento;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(?string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    public function getFechaIni(): ?\DateTimeInterface
+    {
+        return $this->fechaIni;
+    }
+
+    public function setFechaIni(?\DateTimeInterface $fechaIni): self
+    {
+        $this->fechaIni = $fechaIni;
+
+        return $this;
+    }
+
+    public function getFechaFin(): ?\DateTimeInterface
+    {
+        return $this->fechaFin;
+    }
+
+    public function setFechaFin(?\DateTimeInterface $fechaFin): self
+    {
+        $this->fechaFin = $fechaFin;
+
+        return $this;
+    }
+
+    public function getCupo(): ?int
+    {
+        return $this->cupo;
+    }
+
+    public function setCupo(?int $cupo): self
+    {
+        $this->cupo = $cupo;
+
+        return $this;
+    }
+
+    public function getEventoSgiId(): ?int
+    {
+        return $this->eventoSgiId;
+    }
+
+    public function setEventoSgiId(?int $eventoSgiId): self
+    {
+        $this->eventoSgiId = $eventoSgiId;
+
+        return $this;
+    }
+
+    public function getEstado(): ?int
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(?int $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getTipoEvento(): ?TipoEvento
+    {
+        return $this->tipoEvento;
+    }
+
+    public function setTipoEvento(?TipoEvento $tipoEvento): self
+    {
+        $this->tipoEvento = $tipoEvento;
+
+        return $this;
+    }
+
 
 }

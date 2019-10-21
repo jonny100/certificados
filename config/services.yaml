@@ -26,4 +26,16 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    
+    admin.tipo_certificado:
+        class: App\Admin\TipoCertificadoAdmin
+        arguments: [~, App\Entity\TipoCertificado, App\Controller\TipoCertificadoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TipoCertificado }
+        public: true
+
+    admin.certificado:
+        class: App\Admin\CertificadoAdmin
+        arguments: [~, App\Entity\Certificado, App\Controller\CertificadoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Certificado }
+        public: true

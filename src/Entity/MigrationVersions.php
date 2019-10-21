@@ -28,5 +28,22 @@ class MigrationVersions
      */
     private $executedAt;
 
+    public function getVersion(): ?string
+    {
+        return $this->version;
+    }
+
+    public function getExecutedAt(): ?\DateTimeImmutable
+    {
+        return $this->executedAt;
+    }
+
+    public function setExecutedAt(\DateTimeImmutable $executedAt): self
+    {
+        $this->executedAt = $executedAt;
+
+        return $this;
+    }
+
 
 }

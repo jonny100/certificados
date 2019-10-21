@@ -45,5 +45,46 @@ class Certificado
      */
     private $tipoCertificado;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(?string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    public function getEstado(): ?int
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(?int $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getTipoCertificado(): ?TipoCertificado
+    {
+        return $this->tipoCertificado;
+    }
+
+    public function setTipoCertificado(?TipoCertificado $tipoCertificado): self
+    {
+        $this->tipoCertificado = $tipoCertificado;
+
+        return $this;
+    }
+
 
 }

@@ -55,5 +55,58 @@ class InscriptoCertificado
      */
     private $inscripto;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getFechaObt(): ?\DateTimeInterface
+    {
+        return $this->fechaObt;
+    }
+
+    public function setFechaObt(?\DateTimeInterface $fechaObt): self
+    {
+        $this->fechaObt = $fechaObt;
+
+        return $this;
+    }
+
+    public function getEstado(): ?int
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(?int $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getCertificadoEvento(): ?CertificadoEvento
+    {
+        return $this->certificadoEvento;
+    }
+
+    public function setCertificadoEvento(?CertificadoEvento $certificadoEvento): self
+    {
+        $this->certificadoEvento = $certificadoEvento;
+
+        return $this;
+    }
+
+    public function getInscripto(): ?Inscripto
+    {
+        return $this->inscripto;
+    }
+
+    public function setInscripto(?Inscripto $inscripto): self
+    {
+        $this->inscripto = $inscripto;
+
+        return $this;
+    }
+
 
 }
