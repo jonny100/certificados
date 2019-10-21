@@ -1,0 +1,12 @@
+sonata_admin:
+    title: 'Urgencias Mecánicas'
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+    templates:
+        # user_block: MyDemoBundle:Block:user_block.html.twig
+        
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]

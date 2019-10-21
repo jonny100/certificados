@@ -1,0 +1,7 @@
+sonata_user:
+    #security_acl: true
+    manager_type: orm # can be orm or mongodb
+    #mailer: custom.mailer.service.id
+    class:
+        user: App\Application\Sonata\UserBundle\Entity\User
+        group: App\Application\Sonata\UserBundle\Entity\Group
