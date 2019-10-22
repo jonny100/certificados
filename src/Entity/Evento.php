@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -72,6 +74,16 @@ class Evento
      * })
      */
     private $tipoEvento;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="CertificadoEvento", mappedBy="evento", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $certificados;
+
+    public function __construct()
+    {
+        $this->certificados = new ArrayCollection();
+    }
     
     public function __toString() {
         return ''.$this->getDescripcion();
@@ -165,6 +177,46 @@ class Evento
 
         return $this;
     }
+
+    /**
+     * @return Collection|CertificadoEvento[]
+     */
+    public function getCertificados(): Collection
+    {
+        return $this->certificados;
+    }
+    
+    public function setCertificados($certificados) {
+        $this->certificados = $certificados;
+        foreach ($certificados as $certificado) {
+            $certificado->setEvento($this);
+        }
+    }
+
+    public function addCertificado(CertificadoEvento $certificado): self
+    {
+        if (!$this->certificados->contains($certificado)) {
+            $this->certificados[] = $certificado;
+            $certificado->setEvento($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCertificado(CertificadoEvento $certificado): self
+    {
+        if ($this->certificados->contains($certificado)) {
+            $this->certificados->removeElement($certificado);
+            // set the owning side to null (unless already changed)
+            if ($certificado->getEvento() === $this) {
+                $certificado->setEvento(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    
 
 
 }

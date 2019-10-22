@@ -50,6 +50,10 @@ class CertificadoEvento
      * })
      */
     private $template;
+    
+    public function __toString() {
+        return ''.$this->getCertificado();
+    }
 
     public function getId(): ?int
     {

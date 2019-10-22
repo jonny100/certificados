@@ -41,6 +41,10 @@ class Template
      * @ORM\Column(name="estado", type="integer", nullable=true, options={"default"="1"})
      */
     private $estado = '1';
+    
+    public function __toString() {
+        return ''.$this->getDescripcion();
+    }
 
     public function getId(): ?int
     {

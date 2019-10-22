@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\DatePickerType;
+use Sonata\CoreBundle\Form\Type\CollectionType;
 
 final class EventoAdmin extends AbstractAdmin
 {
@@ -23,6 +24,7 @@ final class EventoAdmin extends AbstractAdmin
             ->add('fechaIni')
             ->add('fechaFin')
             ->add('cupo')
+            ->add('certificados')
             //->add('eventoSgiId')
             //->add('estado')
             ;
@@ -37,6 +39,7 @@ final class EventoAdmin extends AbstractAdmin
             ->add('fechaIni', null, array('format' => 'd/m/Y'))
             ->add('fechaFin', null, array('format' => 'd/m/Y'))
             ->add('cupo')
+            ->add('certificados')
             //->add('eventoSgiId')
             //->add('estado')
             ->add('_action', null, [
@@ -57,6 +60,10 @@ final class EventoAdmin extends AbstractAdmin
             ->add('fechaIni', DatePickerType::class, array('format' => 'dd/M/yyyy'))
             ->add('fechaFin', DatePickerType::class, array('format' => 'dd/M/yyyy'))
             ->add('cupo')
+            ->add('certificados', CollectionType::class, array('label' => "Certificados", 'btn_add' => 'Agregar Certificado'), array(
+                    'edit' => 'inline',
+                    'allow_delete' => true,
+                    'inline' => 'standard'))
             //->add('eventoSgiId')
             //->add('estado')
             ;
@@ -71,8 +78,17 @@ final class EventoAdmin extends AbstractAdmin
             ->add('fechaIni', null, array('format' => 'd/m/Y'))
             ->add('fechaFin', null, array('format' => 'd/m/Y'))
             ->add('cupo')
+            ->add('certificados')
             //->add('eventoSgiId')
             //->add('estado')
             ;
+    }
+    
+    public function prePersist($object) {
+        $object->setCertificados($object->getCertificados());
+    }
+
+    public function preUpdate($object) {
+        $object->setCertificados($object->getCertificados());
     }
 }
