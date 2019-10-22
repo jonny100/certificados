@@ -33,21 +33,21 @@ class Evento
      *
      * @ORM\Column(name="fecha_ini", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $fechaIni = 'NULL';
+    private $fechaIni;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="fecha_fin", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $fechaFin = 'NULL';
+    private $fechaFin;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="cupo", type="integer", nullable=true, options={"default"="NULL"})
      */
-    private $cupo = 'NULL';
+    private $cupo;
 
     /**
      * @var int|null
@@ -72,6 +72,10 @@ class Evento
      * })
      */
     private $tipoEvento;
+    
+    public function __toString() {
+        return ''.$this->getDescripcion();
+    }
 
     public function getId(): ?int
     {

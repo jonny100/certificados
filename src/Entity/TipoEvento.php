@@ -35,6 +35,10 @@ class TipoEvento
      */
     private $estado = '1';
 
+    public function __toString() {
+        return ''.$this->getDescripcion();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

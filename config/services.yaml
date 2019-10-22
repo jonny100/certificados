@@ -39,3 +39,17 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Certificado }
         public: true
+
+    admin.tipo_evento:
+        class: App\Admin\TipoEventoAdmin
+        arguments: [~, App\Entity\TipoEvento, App\Controller\TipoEventoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TipoEvento }
+        public: true
+
+    admin.evento:
+        class: App\Admin\EventoAdmin
+        arguments: [~, App\Entity\Evento, App\Controller\EventoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Evento }
+        public: true

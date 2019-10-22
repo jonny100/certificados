@@ -44,6 +44,10 @@ class Certificado
      * })
      */
     private $tipoCertificado;
+    
+    public function __toString() {
+        return ''.$this->getDescripcion();
+    }
 
     public function getId(): ?int
     {
