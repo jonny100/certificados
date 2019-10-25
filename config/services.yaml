@@ -55,6 +55,7 @@ services:
         public: true
         calls:
             - [ addChild, ["@admin.inscripto"]] 
+            - [ addChild, ["@admin.certificado_evento"]]
 
     admin.template:
         class: App\Admin\TemplateAdmin
@@ -69,6 +70,9 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: CertificadoEvento }
         public: true
+        calls:
+            - [ addChild, ["@admin.certificado_evento_requisito"]] 
+        
 
     admin.persona:
         class: App\Admin\PersonaAdmin
@@ -82,4 +86,18 @@ services:
         arguments: [~, App\Entity\Inscripto, App\Controller\InscriptoAdminController]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Inscripto }
+        public: true
+
+    admin.requisito:
+        class: App\Admin\RequisitoAdmin
+        arguments: [~, App\Entity\Requisito, App\Controller\RequisitoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Requisito }
+        public: true
+
+    admin.certificado_evento_requisito:
+        class: App\Admin\CertificadoEventoRequisitoAdmin
+        arguments: [~, App\Entity\CertificadoEventoRequisito, App\Controller\CertificadoEventoRequisitoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CertificadoEventoRequisito }
         public: true

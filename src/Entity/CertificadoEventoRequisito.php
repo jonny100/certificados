@@ -40,6 +40,10 @@ class CertificadoEventoRequisito
      * })
      */
     private $requisito;
+    
+    public function __toString() {
+        return ''.$this->getRequisito();
+    }
 
     public function getId(): ?int
     {

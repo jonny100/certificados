@@ -10,19 +10,18 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-final class CertificadoEventoAdmin extends AbstractAdmin
+final class CertificadoEventoRequisitoAdmin extends AbstractAdmin
 {
     public function  configure()
     {
-        $this->parentAssociationMapping = 'evento';
+        $this->parentAssociationMapping = 'certificadoEvento';
     } 
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('requisito')
             ;
     }
 
@@ -30,14 +29,12 @@ final class CertificadoEventoAdmin extends AbstractAdmin
     {
         $listMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('requisito')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
                     'edit' => [],
                     'delete' => [],
-                    'requisitoslist' => ['template' => 'CertificadoEventoAdmin/list_action_requisitos.html.twig'],
                 ],
             ]);
     }
@@ -46,8 +43,7 @@ final class CertificadoEventoAdmin extends AbstractAdmin
     {
         $formMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('requisito')
             ;
     }
 
@@ -55,8 +51,7 @@ final class CertificadoEventoAdmin extends AbstractAdmin
     {
         $showMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('requisito')
             ;
     }
 }

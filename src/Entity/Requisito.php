@@ -26,7 +26,7 @@ class Requisito
      *
      * @ORM\Column(name="descripcion", type="string", length=45, nullable=true, options={"default"="NULL"})
      */
-    private $descripcion = 'NULL';
+    private $descripcion;
 
     /**
      * @var int|null
@@ -34,6 +34,10 @@ class Requisito
      * @ORM\Column(name="estado", type="integer", nullable=true, options={"default"="1"})
      */
     private $estado = '1';
+    
+    public function __toString() {
+        return ''.$this->getDescripcion();
+    }
 
     public function getId(): ?int
     {

@@ -48,6 +48,7 @@ final class EventoAdmin extends AbstractAdmin
                     'edit' => [],
                     'delete' => [],
                     'inscriptoslist' => ['template' => 'EventoAdmin/list_action_inscriptos.html.twig'],
+                    'certificadoslist' => ['template' => 'EventoAdmin/list_action_certificados.html.twig'],
                 ],
             ]);
     }
