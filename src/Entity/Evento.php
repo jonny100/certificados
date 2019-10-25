@@ -79,10 +79,16 @@ class Evento
      * @ORM\OneToMany(targetEntity="CertificadoEvento", mappedBy="evento", cascade={"all"}, orphanRemoval=true)
      */
     protected $certificados;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Inscripto", mappedBy="evento", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $inscriptos;
 
     public function __construct()
     {
         $this->certificados = new ArrayCollection();
+        $this->inscriptos = new ArrayCollection();
     }
     
     public function __toString() {
@@ -210,6 +216,37 @@ class Evento
             // set the owning side to null (unless already changed)
             if ($certificado->getEvento() === $this) {
                 $certificado->setEvento(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inscripto[]
+     */
+    public function getInscriptos(): Collection
+    {
+        return $this->inscriptos;
+    }
+
+    public function addInscripto(Inscripto $inscripto): self
+    {
+        if (!$this->inscriptos->contains($inscripto)) {
+            $this->inscriptos[] = $inscripto;
+            $inscripto->setEvento($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscripto(Inscripto $inscripto): self
+    {
+        if ($this->inscriptos->contains($inscripto)) {
+            $this->inscriptos->removeElement($inscripto);
+            // set the owning side to null (unless already changed)
+            if ($inscripto->getEvento() === $this) {
+                $inscripto->setEvento(null);
             }
         }
 

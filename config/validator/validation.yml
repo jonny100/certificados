@@ -1,0 +1,5 @@
+App\Entity\InscriptoCertificado:
+    constraints:
+        - Sonata\CoreBundle\Validator\Constraints\InlineConstraint:
+            service: app.inlinevalidator.inscripto_certificado
+            method: validate

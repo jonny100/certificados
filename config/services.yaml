@@ -87,6 +87,9 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Inscripto }
         public: true
+        calls:
+            - [ addChild, ["@admin.inscripto_evento_requisito"]] 
+            - [ addChild, ["@admin.inscripto_certificado"]] 
 
     admin.requisito:
         class: App\Admin\RequisitoAdmin
@@ -101,3 +104,27 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: CertificadoEventoRequisito }
         public: true
+
+    admin.inscripto_evento_requisito:
+        class: App\Admin\InscriptoEventoRequisitoAdmin
+        arguments: [~, App\Entity\InscriptoEventoRequisito, App\Controller\InscriptoEventoRequisitoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: InscriptoEventoRequisito }
+        public: true
+
+    admin.inscripto_certificado:
+        class: App\Admin\InscriptoCertificadoAdmin
+        arguments: [~, App\Entity\InscriptoCertificado, App\Controller\InscriptoCertificadoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: InscriptoCertificado }
+        public: true
+        
+#
+# INLINE VALIDATION SERVICES
+#
+
+    app.inlinevalidator.inscripto_certificado:
+        class: App\Validator\InscriptoCertificadoInlineValidator
+        public: true
+
+        

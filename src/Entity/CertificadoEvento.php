@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +53,16 @@ class CertificadoEvento
      */
     private $template;
     
+    /**
+     * @ORM\OneToMany(targetEntity="CertificadoEventoRequisito", mappedBy="certificadoEvento", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $requisitos;
+
+    public function __construct()
+    {
+        $this->requisitos = new ArrayCollection();
+    }
+    
     public function __toString() {
         return ''.$this->getCertificado();
     }
@@ -92,6 +104,37 @@ class CertificadoEvento
     public function setTemplate(?Template $template): self
     {
         $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CertificadoEventoRequisito[]
+     */
+    public function getRequisitos(): Collection
+    {
+        return $this->requisitos;
+    }
+
+    public function addRequisito(CertificadoEventoRequisito $requisito): self
+    {
+        if (!$this->requisitos->contains($requisito)) {
+            $this->requisitos[] = $requisito;
+            $requisito->setCertificadoEvento($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRequisito(CertificadoEventoRequisito $requisito): self
+    {
+        if ($this->requisitos->contains($requisito)) {
+            $this->requisitos->removeElement($requisito);
+            // set the owning side to null (unless already changed)
+            if ($requisito->getCertificadoEvento() === $this) {
+                $requisito->setCertificadoEvento(null);
+            }
+        }
 
         return $this;
     }

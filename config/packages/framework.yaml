@@ -15,3 +15,6 @@ framework:
         log: true
     templating:
         engines: ['twig', 'php']
+    
+    validation: { enable_annotations: true }
+    

@@ -47,6 +47,10 @@ class InscriptoEventoRequisito
      * })
      */
     private $inscripto;
+    
+    public function __toString() {
+        return ''.$this->getCertificadoEventoRequisito();
+    }
 
     public function getId(): ?int
     {

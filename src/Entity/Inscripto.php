@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,6 +56,22 @@ class Inscripto
      * })
      */
     private $persona;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="InscriptoCertificado", mappedBy="inscripto", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $certificados;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="InscriptoEventoRequisito", mappedBy="inscripto", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $requisitos;
+
+    public function __construct()
+    {
+        $this->certificados = new ArrayCollection();
+        $this->requisitos = new ArrayCollection();
+    }
     
     public function __toString() {
         return ''.$this->getPersona();
@@ -108,6 +126,68 @@ class Inscripto
     public function setPersona(?Persona $persona): self
     {
         $this->persona = $persona;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InscriptoCertificado[]
+     */
+    public function getCertificados(): Collection
+    {
+        return $this->certificados;
+    }
+
+    public function addCertificado(InscriptoCertificado $certificado): self
+    {
+        if (!$this->certificados->contains($certificado)) {
+            $this->certificados[] = $certificado;
+            $certificado->setInscripto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCertificado(InscriptoCertificado $certificado): self
+    {
+        if ($this->certificados->contains($certificado)) {
+            $this->certificados->removeElement($certificado);
+            // set the owning side to null (unless already changed)
+            if ($certificado->getInscripto() === $this) {
+                $certificado->setInscripto(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|InscriptoEventoRequisito[]
+     */
+    public function getRequisitos(): Collection
+    {
+        return $this->requisitos;
+    }
+
+    public function addRequisito(InscriptoEventoRequisito $requisito): self
+    {
+        if (!$this->requisitos->contains($requisito)) {
+            $this->requisitos[] = $requisito;
+            $requisito->setInscripto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRequisito(InscriptoEventoRequisito $requisito): self
+    {
+        if ($this->requisitos->contains($requisito)) {
+            $this->requisitos->removeElement($requisito);
+            // set the owning side to null (unless already changed)
+            if ($requisito->getInscripto() === $this) {
+                $requisito->setInscripto(null);
+            }
+        }
 
         return $this;
     }

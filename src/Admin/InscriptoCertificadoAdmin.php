@@ -11,19 +11,19 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\DatePickerType;
 
-final class InscriptoAdmin extends AbstractAdmin
+final class InscriptoCertificadoAdmin extends AbstractAdmin
 {
     public function  configure()
     {
-        $this->parentAssociationMapping = 'evento';
+        $this->parentAssociationMapping = 'inscripto';
     } 
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             //->add('id')
-            ->add('persona')
-            ->add('fechaInsc')
+            ->add('certificadoEvento')
+            ->add('fechaObt')
             //->add('estado')
             ;
     }
@@ -32,16 +32,14 @@ final class InscriptoAdmin extends AbstractAdmin
     {
         $listMapper
             //->add('id')
-            ->add('persona')
-            ->add('fechaInsc', null, array('format' => 'd/m/Y'))
+            ->add('certificadoEvento')
+            ->add('fechaObt', null, array('format' => 'd/m/Y'))
             //->add('estado')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
                     'edit' => [],
                     'delete' => [],
-                    'requisitoslist' => ['template' => 'InscriptoAdmin/list_action_requisitos.html.twig'],
-                    'certificadoslist' => ['template' => 'InscriptoAdmin/list_action_certificados.html.twig'],
                 ],
             ]);
     }
@@ -50,8 +48,8 @@ final class InscriptoAdmin extends AbstractAdmin
     {
         $formMapper
             //->add('id')
-            ->add('persona')
-            ->add('fechaInsc', DatePickerType::class, array('format' => 'dd/M/yyyy'))
+            ->add('certificadoEvento')
+            ->add('fechaObt', DatePickerType::class, array('format' => 'dd/M/yyyy'))
             //->add('estado')
             ;
     }
@@ -60,8 +58,8 @@ final class InscriptoAdmin extends AbstractAdmin
     {
         $showMapper
             //->add('id')
-            ->add('persona')
-            ->add('fechaInsc', null, array('format' => 'd/m/Y'))
+            ->add('certificadoEvento')
+            ->add('fechaObt', null, array('format' => 'd/m/Y'))
             //->add('estado')
             ;
     }

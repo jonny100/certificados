@@ -26,7 +26,7 @@ class InscriptoCertificado
      *
      * @ORM\Column(name="fecha_obt", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $fechaObt = 'NULL';
+    private $fechaObt;
 
     /**
      * @var int|null
@@ -54,6 +54,10 @@ class InscriptoCertificado
      * })
      */
     private $inscripto;
+    
+    public function __toString() {
+        return ''.$this->getCertificadoEvento();
+    }
 
     public function getId(): ?int
     {
