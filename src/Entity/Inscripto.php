@@ -26,7 +26,7 @@ class Inscripto
      *
      * @ORM\Column(name="fecha_insc", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $fechaInsc = 'NULL';
+    private $fechaInsc;
 
     /**
      * @var int|null
@@ -54,6 +54,10 @@ class Inscripto
      * })
      */
     private $persona;
+    
+    public function __toString() {
+        return ''.$this->getPersona();
+    }
 
     public function getId(): ?int
     {

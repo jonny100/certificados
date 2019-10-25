@@ -53,6 +53,8 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Evento }
         public: true
+        calls:
+            - [ addChild, ["@admin.inscripto"]] 
 
     admin.template:
         class: App\Admin\TemplateAdmin
@@ -73,4 +75,11 @@ services:
         arguments: [~, App\Entity\Persona, App\Controller\PersonaAdminController]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Persona }
+        public: true
+
+    admin.inscripto:
+        class: App\Admin\InscriptoAdmin
+        arguments: [~, App\Entity\Inscripto, App\Controller\InscriptoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Inscripto }
         public: true
