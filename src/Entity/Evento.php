@@ -28,7 +28,7 @@ class Evento
      *
      * @ORM\Column(name="descripcion", type="string", length=450, nullable=true, options={"default"="NULL"})
      */
-    private $descripcion = 'NULL';
+    private $descripcion;
 
     /**
      * @var \DateTime|null
@@ -50,6 +50,27 @@ class Evento
      * @ORM\Column(name="cupo", type="integer", nullable=true, options={"default"="NULL"})
      */
     private $cupo;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="correspondiente", type="string", length=450, nullable=true, options={"default"="NULL"})
+     */
+    private $correspondiente;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="resolucion", type="string", length=450, nullable=true, options={"default"="NULL"})
+     */
+    private $resolucion;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="horas", type="string", length=450, nullable=true, options={"default"="NULL"})
+     */
+    private $horas;
 
     /**
      * @var int|null
@@ -249,6 +270,42 @@ class Evento
                 $inscripto->setEvento(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCorrespondiente(): ?string
+    {
+        return $this->correspondiente;
+    }
+
+    public function setCorrespondiente(?string $correspondiente): self
+    {
+        $this->correspondiente = $correspondiente;
+
+        return $this;
+    }
+
+    public function getResolucion(): ?string
+    {
+        return $this->resolucion;
+    }
+
+    public function setResolucion(?string $resolucion): self
+    {
+        $this->resolucion = $resolucion;
+
+        return $this;
+    }
+
+    public function getHoras(): ?string
+    {
+        return $this->horas;
+    }
+
+    public function setHoras(?string $horas): self
+    {
+        $this->horas = $horas;
 
         return $this;
     }

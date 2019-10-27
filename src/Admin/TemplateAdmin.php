@@ -9,10 +9,10 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 final class TemplateAdmin extends AbstractAdmin
 {
-
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
@@ -44,7 +44,7 @@ final class TemplateAdmin extends AbstractAdmin
         $formMapper
             //->add('id')
             ->add('descripcion')
-            ->add('codigo')
+            ->add('codigo', CKEditorType::class)
             //->add('estado')
             ;
     }

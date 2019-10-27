@@ -24,6 +24,7 @@ final class InscriptoAdmin extends AbstractAdmin
         $datagridMapper
             //->add('id')
             ->add('persona')
+            ->add('legajo')
             ->add('fechaInsc')
             //->add('estado')
             ;
@@ -34,6 +35,7 @@ final class InscriptoAdmin extends AbstractAdmin
         $listMapper
             //->add('id')
             ->add('persona')
+            ->add('legajo')
             ->add('fechaInsc', null, array('format' => 'd/m/Y'))
             //->add('estado')
             ->add('_action', null, [
@@ -52,6 +54,7 @@ final class InscriptoAdmin extends AbstractAdmin
         $formMapper
             //->add('id')
             ->add('persona', ModelListType::class)
+            ->add('legajo')
             ->add('fechaInsc', DatePickerType::class, array('format' => 'dd/M/yyyy'))
             //->add('estado')
             ;
@@ -62,6 +65,7 @@ final class InscriptoAdmin extends AbstractAdmin
         $showMapper
             //->add('id')
             ->add('persona')
+            ->add('legajo')
             ->add('fechaInsc', null, array('format' => 'd/m/Y'))
             //->add('estado')
             ;

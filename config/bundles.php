@@ -28,4 +28,5 @@ return [
     App\Application\Sonata\UserBundle\ApplicationSonataUserBundle::class => ['all' => true],
     App\Application\ToolsBundle\ApplicationToolsBundle::class => ['all' => true],
     WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle::class => ['all' => true],
+    FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
 ];

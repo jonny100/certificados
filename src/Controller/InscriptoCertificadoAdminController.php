@@ -19,10 +19,13 @@ final class InscriptoCertificadoAdminController extends CRUDController
      */
     public function certificadoAction(Request $request){    
             $object = $this->admin->getSubject();
+            $id = $request->get($this->admin->getIdParameter());
+            $inscriptoCertificado = $this->admin->getObject($id);
             
             if (!$object) {
-                throw new NotFoundHttpException(sprintf('No se pudo encontrar el legajo correspondiente a esta identificación : %s', $id));
+                throw new NotFoundHttpException(sprintf('No se pudo encontrar el objeto correspondiente a esta identificación : %s', $id));
             }
+            
             $pdf = new ReportPDF(); 
             
             $pdf->AddPage('L');
@@ -71,11 +74,11 @@ final class InscriptoCertificadoAdminController extends CRUDController
 
             $json = $object->getCodigoQR();//'{ "datos": [{ "id": "'.$object->getId().'", "clase": "caso", "descripcion": "'.$object->getNumeroLegajo(). ' - ' .$object->getAnioLegajo().'-'.$object.'"  }] }';
 
-              
+            $text = $inscriptoCertificado->getCertificadoEvento()->getTemplate()->getCodigo();  
 
-            $text = 'texto'; //$object->getTextoCaratula();
-            $pdf->writeHTMLCell(0,0, 40, 80, $text, 0, 0, 0, true,"C", 0);
-            $pdf->write2DBarcode( $json, 'QRCODE,L', 150, 20, 40, 40, $style, 'N');
+//            $text = 'texto'; //$object->getTextoCaratula();
+            $pdf->writeHTMLCell(0,0, 20, 40, $text, 0, 0, 0, true,"C", 0);
+            $pdf->write2DBarcode( $json, 'QRCODE,L', 240, 115, 40, 40, $style, 'N');
             $file = $pdf->Output('certificado.pdf', 'S');
             
             $response = new Response($file);

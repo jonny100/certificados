@@ -58,6 +58,13 @@ class Inscripto
     private $persona;
     
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="legajo", type="string", length=450, nullable=true, options={"default"="NULL"})
+     */
+    private $legajo;
+    
+    /**
      * @ORM\OneToMany(targetEntity="InscriptoCertificado", mappedBy="inscripto", cascade={"all"}, orphanRemoval=true)
      */
     protected $certificados;
@@ -188,6 +195,18 @@ class Inscripto
                 $requisito->setInscripto(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLegajo(): ?string
+    {
+        return $this->legajo;
+    }
+
+    public function setLegajo(?string $legajo): self
+    {
+        $this->legajo = $legajo;
 
         return $this;
     }
