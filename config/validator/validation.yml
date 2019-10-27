@@ -3,3 +3,26 @@ App\Entity\InscriptoCertificado:
         - Sonata\CoreBundle\Validator\Constraints\InlineConstraint:
             service: app.inlinevalidator.inscripto_certificado
             method: validate
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [inscripto, certificadoEvento]
+            
+App\Entity\CertificadoEvento:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [certificado, evento]
+            
+App\Entity\CertificadoEventoRequisito:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [certificadoEvento, requisito]
+            
+App\Entity\Inscripto:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [evento, persona]
+            
+App\Entity\InscriptoEventoRequisito:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [inscripto, certificadoEventoRequisito]
+            

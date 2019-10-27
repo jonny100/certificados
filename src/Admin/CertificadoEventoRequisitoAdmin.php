@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 
 final class CertificadoEventoRequisitoAdmin extends AbstractAdmin
 {
@@ -43,7 +44,7 @@ final class CertificadoEventoRequisitoAdmin extends AbstractAdmin
     {
         $formMapper
             //->add('id')
-            ->add('requisito')
+            ->add('requisito', ModelListType::class)
             ;
     }
 

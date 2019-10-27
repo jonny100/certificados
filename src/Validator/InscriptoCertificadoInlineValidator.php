@@ -15,11 +15,30 @@ class InscriptoCertificadoInlineValidator {
  
         $certificadoEventoRequisitos = $obj->getCertificadoEvento()->getRequisitos();
         $inscriptoEventoRequisitos = $obj->getInscripto()->getRequisitos();
+        
+
+        foreach($certificadoEventoRequisitos as $certificadoR){
+            $existe = false;
+            foreach($inscriptoEventoRequisitos as $inscriptoR){
+                $existe = false;
+                if ($inscriptoR->getCertificadoEventoRequisito()->getRequisito() == $certificadoR->getRequisito()){
+                     $existe = true;
+                     break;
+                }
+            }
+            if(!$existe){
+                $msgx = 'Para otorgar el certificado ' . $obj . ' debe tener el requisito '.$certificadoR->getRequisito();
+                $errorElement->addViolation($msgx)->end();
+            }
+        }
+        
+        
 //        foreach($certificadoEventoRequisitos as $item){
-//            echo($item->getId());
+//            echo($item.'-');
 //        }
+//        echo('<br>');
 //        foreach($inscriptoEventoRequisitos as $item){
-//            echo($item->getId());
+//            echo($item.'-');
 //        }
 //        die();
 //
@@ -62,5 +81,6 @@ class InscriptoCertificadoInlineValidator {
 //        } 
         
     }
-
 }
+
+

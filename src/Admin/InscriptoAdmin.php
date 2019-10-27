@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\DatePickerType;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 
 final class InscriptoAdmin extends AbstractAdmin
 {
@@ -50,7 +51,7 @@ final class InscriptoAdmin extends AbstractAdmin
     {
         $formMapper
             //->add('id')
-            ->add('persona')
+            ->add('persona', ModelListType::class)
             ->add('fechaInsc', DatePickerType::class, array('format' => 'dd/M/yyyy'))
             //->add('estado')
             ;
