@@ -58,6 +58,12 @@ class InscriptoCertificado
     public function __toString() {
         return ''.$this->getCertificadoEvento();
     }
+    
+    public function getCodigoQR() {
+
+        $json = '{ "datos": [{ "id": "' . $this->getId() . '", "clase": "inscriptocertificado", "inscripto": "' . $this->getInscripto() . '"  }] }';
+        return $json;
+    }
 
     public function getId(): ?int
     {

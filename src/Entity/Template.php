@@ -26,14 +26,14 @@ class Template
      *
      * @ORM\Column(name="descripcion", type="string", length=45, nullable=true, options={"default"="NULL"})
      */
-    private $descripcion = 'NULL';
+    private $descripcion;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="codigo", type="text", length=0, nullable=true, options={"default"="NULL"})
      */
-    private $codigo = 'NULL';
+    private $codigo;
 
     /**
      * @var int|null

@@ -601,6 +601,9 @@
     "symfony/yaml": {
         "version": "v4.3.4"
     },
+    "tecnickcom/tcpdf": {
+        "version": "6.3.2"
+    },
     "twig/extensions": {
         "version": "1.0",
         "recipe": {
@@ -618,6 +621,9 @@
     },
     "webmozart/assert": {
         "version": "1.5.0"
+    },
+    "whiteoctober/tcpdf-bundle": {
+        "version": "1.1.2"
     },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"

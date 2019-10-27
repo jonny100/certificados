@@ -10,9 +10,14 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\DatePickerType;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 final class InscriptoCertificadoAdmin extends AbstractAdmin
 {
+    protected function configureRoutes(RouteCollection $collection) {               
+        $collection->add('certificado', $this->getRouterIdParameter() . '/certificado');
+    }
+    
     public function  configure()
     {
         $this->parentAssociationMapping = 'inscripto';
@@ -40,6 +45,7 @@ final class InscriptoCertificadoAdmin extends AbstractAdmin
                     'show' => [],
                     'edit' => [],
                     'delete' => [],
+                    'certificadopdf' => ['template' => 'InscriptoCertificadoAdmin/list__action_certificado.html.twig'],
                 ],
             ]);
     }

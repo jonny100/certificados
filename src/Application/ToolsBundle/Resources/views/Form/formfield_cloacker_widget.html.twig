@@ -1,0 +1,43 @@
+{% block apptools_formfield_cloaker_widget %}
+    {{ block('hidden_widget') }}
+
+    <script type="text/javascript">
+      {% set main_form_name = id|slice(0, id|length - name|length) %}
+      {% set field_id = form.vars.id %}
+      var cloak_{{ field_id }}_data = {{ form.vars.cloak_options|raw }};
+
+      function cloak_{{ field_id }}_manage(nvalue) {
+        var data = cloak_{{ field_id }}_data;
+        var show_list = {};
+        var hide_list = data.fields;
+
+        if(data.map.hasOwnProperty(nvalue)) {
+          show_list = data.map[nvalue];
+        }
+        
+        {# alert('cloak_{{ field_id }}_manage:'+nvalue);#}
+        {% set selector_tpl = form.vars.selector|replace({'%form_name%': main_form_name}) %}
+        for(id in show_list) {
+          sel = '{{ selector_tpl|raw }}'.replace("%field_id%", show_list[id]);
+          {#alert('Selector:'+sel);#}
+          obj = eval(sel);
+          obj.{{ form.vars.show_effect }};
+        }
+        for(id in hide_list) {
+          if(jQuery.inArray(hide_list[id], show_list) == "-1") {
+            sel = '{{ selector_tpl|raw }}'.replace("%field_id%", hide_list[id]);
+            obj = eval(sel);
+            obj.{{ form.vars.hide_effect }};
+          }
+        }
+      }
+
+      jQuery(function(){
+        trigger_field = 'select[id$="{{ form.vars.trigger_field }}"], input[id$="{{ form.vars.trigger_field }}"]';
+        jQuery(trigger_field).change( function() {
+            cloak_{{ form.vars.id }}_manage(this.value);
+        });
+        cloak_{{ form.vars.id }}_manage(jQuery(trigger_field).val());
+      });
+    </script>
+{% endblock apptools_formfield_cloaker_widget %}

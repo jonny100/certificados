@@ -23,8 +23,9 @@ return [
     Sonata\EasyExtendsBundle\SonataEasyExtendsBundle::class => ['dev' => true, 'test' => true],
     Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle::class => ['all' => true],
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
-    Nelmio\ApiDocBundle\NelmioApiDocBundle::class => ['all' => true],    
+    Nelmio\ApiDocBundle\NelmioApiDocBundle::class => ['all' => true],
     Sonata\UserBundle\SonataUserBundle::class => ['all' => true],
-    
     App\Application\Sonata\UserBundle\ApplicationSonataUserBundle::class => ['all' => true],
+    App\Application\ToolsBundle\ApplicationToolsBundle::class => ['all' => true],
+    WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle::class => ['all' => true],
 ];

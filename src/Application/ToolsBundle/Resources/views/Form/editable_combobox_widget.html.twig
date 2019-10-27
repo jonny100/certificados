@@ -1,0 +1,23 @@
+{% block apptools_editable_combobox_widget %}
+<div class="input-group">
+  {% set input_id = form.vars.id %}
+  {% set combobox_fname = input_id ~ '_combobox' %}
+  {% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
+  {% set type = type|default('text') -%}
+  <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+  <div class="input-group-btn">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+      {% for key, value in choices %}
+      <li><a href="javascript:void(0);" onclick="{{ combobox_fname }}('{{ key }}');">{{ value }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <script type="text/javascript">
+    function {{ combobox_fname }}(value) {
+      jQuery("#{{ input_id }}").val(value);
+    };
+  </script>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% block apptools_startend_date_widget %}
+<div class="form-inline">
+  <div class="form-group">
+    {{ form_errors(form.month) }}
+    {{ form_widget(form.month) }}
+    
+    {{ form_errors(form.year) }}
+    {{ form_widget(form.year) }}
+  </div>
+</div>
+{% endblock apptools_startend_date_widget %}
+{# kate: tab-width 2; #}

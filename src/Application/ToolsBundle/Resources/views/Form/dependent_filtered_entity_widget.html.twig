@@ -1,0 +1,42 @@
+{% block apptools_dependent_filtered_entity_widget %}
+    {% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
+    {{ block('choice_widget') }}
+    {% set loaderid = [form.vars.id, '_loader'] | join('') %}
+    <img src='{{ asset('bundles/applicationtools/images/ajax-loader.gif' ) }}' id='{{ loaderid }}' style='display: none;'>
+    <script type="text/javascript">
+        jQuery(function(){
+
+            jQuery("select#{{ form.parent.offsetGet( parent_form_field ).vars.id }}").change( function() {
+                var selected_index = {{ value ? value : 0 }};
+                jQuery("#{{ loaderid }}").show();
+                jQuery.ajax({
+                    type: "POST",
+                    data: {
+                        parent_id: jQuery(this).val(),
+                        entity_alias: "{{ entity_alias }}",
+                        placeholder: "{{ placeholder }}"
+                    },
+                    url:"{{ path('application_tools_dependent_filtered_entity') }}",
+                    success: function(msg){
+                        if (msg != ''){
+                            jQuery("select#{{ form.vars.id }}").html(msg).show();
+                            jQuery.each(jQuery("select#{{ form.vars.id }} option"), function (index, option){
+                                if (jQuery(option).val() == selected_index)
+                                    jQuery(option).prop('selected', true);
+                            })
+                            jQuery("select#{{ form.vars.id }}").trigger('change');
+                            jQuery("#{{ loaderid }}").hide();
+                        } else {
+                            jQuery("select#{{ form.vars.id }}").html('<em>{{ no_result_msg|trans() }}</em>');
+                            jQuery("#{{ loaderid }}").hide();
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                    jQuery('html').html(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+{# kate: tab-width 2 #}

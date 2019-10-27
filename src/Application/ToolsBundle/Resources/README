@@ -1,0 +1,11 @@
+TODO:
+
+Las clases TaggedService*  se usaron como prueba para poder realizar
+un dropdown que liste los servicios que tengan cierto tag.
+No esta terminado, pero sirvio para descubrir un metodo mas facil.
+Lo que se deberia hacer es:
+* Crear clase similar a TaggedServiceListerCompilerPass, denominarla ReportGeneratorListerCP, y cargarla en Application\ToolsBundle\ApplicationToolsBundle::build
+* Crear clase similar a TaggedServiceLister y denominarla ReportGeneratorServiceLister
+* Esta clase registrara los servicios taggeados como app.report.generator
+* Usar un field type comun para mostrar el dropdown en los forms usando la clase lister obteniendola del container.
+* Definir si poner todo esto en ToolsBundle o Simplemente en Report Bundle.

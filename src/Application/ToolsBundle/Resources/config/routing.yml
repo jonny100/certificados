@@ -1,0 +1,12 @@
+#- Import the bundle's routing resource in the app main routing file:
+#    ApplicationToolsBundle:
+#        resource: "@ApplicationToolsBundle/Resources/config/routing.yml"
+#        prefix:   /
+
+#application_tools_homepage:
+#    path:     /hello/{name}
+#    defaults: { _controller: ApplicationToolsBundle:Default:index }
+
+application_tools_dependent_filtered_entity:
+    path: "/apptools_dependent_filtered_entity"
+    defaults: { _controller: ApplicationToolsBundle:DependentFilteredEntity:getOptions }

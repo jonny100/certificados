@@ -1,0 +1,70 @@
+parameters:
+#    application_tools.example.class: Application\ToolsBundle\Example
+
+services:
+#    application_tools.example:
+#        class: %application_tools.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+#
+# FORM RELATED SERVICES
+#
+    application_tools.type.entity_hidden:
+        class: App\Application\ToolsBundle\Form\Type\EntityHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: entity_hidden }
+    
+    application_tools.type.dependent_filtered_entity:
+        class: App\Application\ToolsBundle\Form\Type\DependentFilteredEntityType
+        arguments: ["@doctrine", "@property_accessor"]
+        tags:
+            - { name: form.type, alias: apptools_dependent_filtered_entity }
+
+    application_tools.dependent_filtered_entity_subscriber:
+        class: App\Application\ToolsBundle\Form\EventListener\DependentFilteredEntitySubscriber
+        arguments: ["@service_container", "@property_accessor"]
+    
+    application_tools.type.cloak_entity:
+        class: App\Application\ToolsBundle\Form\Type\CloakEntityType
+        arguments: ["@doctrine", "@property_accessor"]
+        tags:
+            - { name: form.type, alias: apptools_cloak_entity }
+    
+    application_tools.type.editable_combobox:
+        class: App\Application\ToolsBundle\Form\Type\EditableComboboxType
+        tags:
+            - { name: form.type, alias: apptools_editable_combobox }
+
+    application_tools.type.formfield_cloaker:
+        class: App\Application\ToolsBundle\Form\Type\FormFieldCloakerType
+        tags:
+            - { name: form.type, alias: apptools_formfield_cloaker }
+    
+
+#    Tagged Service lister Example:            
+#    application_tools.tagged_service_lister:
+#        class: Application\ToolsBundle\Service\TaggedServiceLister
+#
+#    application_tools.aservice_with_tags:
+#        class: Application\ToolsBundle\Service\Myservice
+#        tags:
+#            - { name: 'application_tools.tagged_service', tag1: 'report_builder' }
+    
+    application_tools.type.geo_location:
+        class: App\Application\ToolsBundle\Form\Type\GeoLocationType
+#        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: geo_location }
+
+    application_tools.form.type.startend_date:
+        class: App\Application\ToolsBundle\Form\Type\StartEndDateType
+        tags:
+            - { name: form.type, alias: apptools_startend_date }
+    
+    application_tools.type.tagged_service_choice:
+        class: App\Application\ToolsBundle\Form\Type\TaggedServiceChoiceType
+        arguments: ["@service_container"]
+        tags:
+            - { name: form.type, alias: tagged_service_choice }
+

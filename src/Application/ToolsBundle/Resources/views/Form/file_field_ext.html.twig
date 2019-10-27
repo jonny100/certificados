@@ -1,0 +1,24 @@
+{% extends 'SonataAdminBundle:Form:form_admin_fields.html.twig' %}
+
+{% block file_widget %}
+  {% spaceless %}
+  {% if thumb_url is not null %}
+    {% if link_url is not null %}
+      <a href="{{ link_url }}" target="_blank">
+        <img class="img-thumbnail" style="margin-bottom: 5px;" src="{{ thumb_url }}"/>
+      </a>
+    {% else %}
+      <img class="img-thumbnail" style="margin-bottom: 5px;" src="{{ thumb_url }}"/>
+    {% endif %}
+  {% else %}
+    {% if link_url is not null %}
+      <a href="{{ link_url }}" class="btn btn-default" target="_blank" style="margin-bottom: 5px;">
+        <span class="glyphicon glyphicon-download-alt"></span>
+        {{ link_label }}
+      </a>
+    {% endif %}
+  {% endif %}
+  {{ block('form_widget') }}
+  {% endspaceless %}
+{% endblock %}
+{# kate: tab-width 2 #}
