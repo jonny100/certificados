@@ -55,6 +55,13 @@ class InscriptoCertificado
      */
     private $inscripto;
     
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="codigo_verificacion", type="string", length=450, nullable=true, options={"default"="NULL"})
+     */
+    private $codigo_verificacion;
+    
     public function __toString() {
         return ''.$this->getCertificadoEvento();
     }
@@ -114,6 +121,18 @@ class InscriptoCertificado
     public function setInscripto(?Inscripto $inscripto): self
     {
         $this->inscripto = $inscripto;
+
+        return $this;
+    }
+
+    public function getCodigoVerificacion(): ?string
+    {
+        return $this->codigo_verificacion;
+    }
+
+    public function setCodigoVerificacion(?string $codigo_verificacion): self
+    {
+        $this->codigo_verificacion = $codigo_verificacion;
 
         return $this;
     }
