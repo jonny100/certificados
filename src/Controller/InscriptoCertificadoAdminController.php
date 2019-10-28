@@ -78,7 +78,8 @@ final class InscriptoCertificadoAdminController extends CRUDController
 
 //            $text = 'texto'; //$object->getTextoCaratula();
             $pdf->writeHTMLCell(0,0, 80, 30, $text, 0, 0, 0, true,"L", 0);
-            $pdf->write2DBarcode( $json, 'QRCODE,L', 240, 115, 40, 40, $style, 'N');
+            $pdf->write2DBarcode( $json, 'QRCODE,L', 240, 113, 40, 40, $style, 'N');
+            $pdf->writeHTMLCell(0,0, 239, 152, $inscriptoCertificado->getCodigoVerificacion());
             $file = $pdf->Output('certificado.pdf', 'S');
             
             $response = new Response($file);

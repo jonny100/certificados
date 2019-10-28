@@ -56,7 +56,7 @@ final class PersonaAdmin extends AbstractAdmin
         $formMapper
             //->add('id')
             ->add('apellidoNombre')
-            ->add('dni')
+            ->add('dni', null, array('required' => true))
             ->add('direccion')
             ->add('email')
             ->add('telefono')

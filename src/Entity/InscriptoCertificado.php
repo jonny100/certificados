@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * InscriptoCertificado
  *
- * @ORM\Table(name="inscripto_certificado", indexes={@ORM\Index(name="fk_inscripto_certificado_certificado_evento1_idx", columns={"certificado_evento_id"}), @ORM\Index(name="fk_inscripto_certificado_inscripto1_idx", columns={"inscripto_id"})})
+ * @ORM\Table(name="inscripto_certificado", indexes={@ORM\Index(name="fk_inscripto_certificado_certificado_evento1_idx", columns={"certificado_evento_id"}), @ORM\Index(name="fk_inscripto_certificado_inscripto1_idx", columns={"inscripto_id"}), @ORM\Index(name="fk_inscripto_certificado_codigoverificacion1_idx", columns={"codigo_verificacion"})})
  * @ORM\Entity
  */
 class InscriptoCertificado
@@ -60,7 +60,7 @@ class InscriptoCertificado
      *
      * @ORM\Column(name="codigo_verificacion", type="string", length=450, nullable=true, options={"default"="NULL"})
      */
-    private $codigo_verificacion;
+    private $codigoVerificacion;
     
     public function __toString() {
         return ''.$this->getCertificadoEvento();
@@ -127,12 +127,12 @@ class InscriptoCertificado
 
     public function getCodigoVerificacion(): ?string
     {
-        return $this->codigo_verificacion;
+        return $this->codigoVerificacion;
     }
 
     public function setCodigoVerificacion(?string $codigo_verificacion): self
     {
-        $this->codigo_verificacion = $codigo_verificacion;
+        $this->codigoVerificacion = $codigo_verificacion;
 
         return $this;
     }

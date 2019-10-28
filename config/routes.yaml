@@ -9,3 +9,8 @@ sonata_user_admin_security:
 sonata_user_admin_resetting:
     resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.xml'
     prefix: /admin/resetting
+    
+app_default_verificacion:
+    path: /admin/verificacion
+    defaults:
+        _controller: App\Controller\DefaultController::verificacionAction
