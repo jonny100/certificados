@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS `certificado`;
 CREATE TABLE `certificado` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) DEFAULT NULL,
-  `tipo_certificado_id` int(11) NOT NULL,
+  `tipo_certificado_id` int(11) DEFAULT NULL,
   `estado` int(11) DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `fk_certificados_tipo_certificado_idx` (`tipo_certificado_id`),
@@ -55,8 +55,8 @@ DROP TABLE IF EXISTS `certificado_evento`;
 CREATE TABLE `certificado_evento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `template_id` int(11) DEFAULT NULL,
-  `certificado_id` int(11) NOT NULL,
-  `evento_id` int(11) NOT NULL,
+  `certificado_id` int(11) DEFAULT NULL,
+  `evento_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_certificado_evento_template1_idx` (`template_id`),
   KEY `fk_certificado_evento_certificado1_idx` (`certificado_id`),
@@ -72,7 +72,7 @@ CREATE TABLE `certificado_evento` (
 
 /*!40000 ALTER TABLE `certificado_evento` DISABLE KEYS */;
 INSERT INTO `certificado_evento` (`id`,`template_id`,`certificado_id`,`evento_id`) VALUES 
- (1,NULL,1,1),
+ (1,1,1,1),
  (3,NULL,2,1);
 /*!40000 ALTER TABLE `certificado_evento` ENABLE KEYS */;
 
@@ -84,14 +84,14 @@ INSERT INTO `certificado_evento` (`id`,`template_id`,`certificado_id`,`evento_id
 DROP TABLE IF EXISTS `certificado_evento_requisito`;
 CREATE TABLE `certificado_evento_requisito` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `requisito_id` int(11) NOT NULL,
-  `certificado_evento_id` int(11) NOT NULL,
+  `requisito_id` int(11) DEFAULT NULL,
+  `certificado_evento_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_evento_requisito_requisito1_idx` (`requisito_id`),
   KEY `fk_certificado_evento_requisito_certificado_evento1_idx` (`certificado_evento_id`),
   CONSTRAINT `fk_certificado_evento_requisito_certificado_evento1` FOREIGN KEY (`certificado_evento_id`) REFERENCES `certificado_evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_evento_requisito_requisito1` FOREIGN KEY (`requisito_id`) REFERENCES `requisito` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `certificados`.`certificado_evento_requisito`
@@ -100,7 +100,9 @@ CREATE TABLE `certificado_evento_requisito` (
 /*!40000 ALTER TABLE `certificado_evento_requisito` DISABLE KEYS */;
 INSERT INTO `certificado_evento_requisito` (`id`,`requisito_id`,`certificado_evento_id`) VALUES 
  (1,1,1),
- (2,2,3);
+ (3,2,3),
+ (4,3,3),
+ (5,4,3);
 /*!40000 ALTER TABLE `certificado_evento_requisito` ENABLE KEYS */;
 
 
@@ -116,8 +118,11 @@ CREATE TABLE `evento` (
   `fecha_fin` datetime DEFAULT NULL,
   `cupo` int(11) DEFAULT NULL,
   `evento_sgi_id` int(11) DEFAULT NULL,
-  `tipo_evento_id` int(11) NOT NULL,
+  `tipo_evento_id` int(11) DEFAULT NULL,
   `estado` int(11) DEFAULT 1,
+  `correspondiente` varchar(450) DEFAULT 'NULL',
+  `resolucion` varchar(450) DEFAULT 'NULL',
+  `horas` varchar(450) DEFAULT 'NULL',
   PRIMARY KEY (`id`),
   KEY `fk_evento_tipo_evento1_idx` (`tipo_evento_id`),
   CONSTRAINT `fk_evento_tipo_evento1` FOREIGN KEY (`tipo_evento_id`) REFERENCES `tipo_evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -128,8 +133,8 @@ CREATE TABLE `evento` (
 --
 
 /*!40000 ALTER TABLE `evento` DISABLE KEYS */;
-INSERT INTO `evento` (`id`,`descripcion`,`fecha_ini`,`fecha_fin`,`cupo`,`evento_sgi_id`,`tipo_evento_id`,`estado`) VALUES 
- (1,'Curso de Aleman','2019-10-01 00:00:00','2019-10-20 00:00:00',NULL,0,1,1);
+INSERT INTO `evento` (`id`,`descripcion`,`fecha_ini`,`fecha_fin`,`cupo`,`evento_sgi_id`,`tipo_evento_id`,`estado`,`correspondiente`,`resolucion`,`horas`) VALUES 
+ (1,'CICLO I','2019-10-01 00:00:00','2019-10-20 00:00:00',NULL,0,1,1,'Actualización Académica en Pensamiento Nacional','1258/2019','200');
 /*!40000 ALTER TABLE `evento` ENABLE KEYS */;
 
 
@@ -206,7 +211,7 @@ CREATE TABLE `fos_user_user` (
 
 /*!40000 ALTER TABLE `fos_user_user` DISABLE KEYS */;
 INSERT INTO `fos_user_user` (`id`,`username`,`username_canonical`,`email`,`email_canonical`,`enabled`,`salt`,`password`,`last_login`,`confirmation_token`,`password_requested_at`,`roles`,`created_at`,`updated_at`,`date_of_birth`,`firstname`,`lastname`,`website`,`biography`,`gender`,`locale`,`timezone`,`phone`,`facebook_uid`,`facebook_name`,`facebook_data`,`twitter_uid`,`twitter_name`,`twitter_data`,`gplus_uid`,`gplus_name`,`gplus_data`,`token`,`two_step_code`) VALUES 
- (1,'admin','admin','admin@gmail.com','admin@gmail.com',1,NULL,'$2y$13$Y5kBdLwBkmZ/K3N6S3y/juPuLUMxMRuGQ6HQRgR1XKIkzM2cfwF6K','2019-10-25 18:00:39',NULL,NULL,'a:1:{i:0;s:16:\"ROLE_SUPER_ADMIN\";}','2019-10-21 18:01:14','2019-10-25 18:00:39',NULL,NULL,NULL,NULL,NULL,'u',NULL,NULL,NULL,NULL,NULL,'null',NULL,NULL,'null',NULL,NULL,'null',NULL,NULL);
+ (1,'admin','admin','admin@gmail.com','admin@gmail.com',1,NULL,'$2y$13$Y5kBdLwBkmZ/K3N6S3y/juPuLUMxMRuGQ6HQRgR1XKIkzM2cfwF6K','2019-10-28 17:45:24',NULL,NULL,'a:1:{i:0;s:16:\"ROLE_SUPER_ADMIN\";}','2019-10-21 18:01:14','2019-10-28 17:45:24',NULL,NULL,NULL,NULL,NULL,'u',NULL,NULL,NULL,NULL,NULL,'null',NULL,NULL,'null',NULL,NULL,'null',NULL,NULL);
 /*!40000 ALTER TABLE `fos_user_user` ENABLE KEYS */;
 
 
@@ -241,23 +246,25 @@ DROP TABLE IF EXISTS `inscripto`;
 CREATE TABLE `inscripto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fecha_insc` datetime DEFAULT NULL,
-  `evento_id` int(11) NOT NULL,
-  `persona_id` int(11) NOT NULL,
+  `evento_id` int(11) DEFAULT NULL,
+  `persona_id` int(11) DEFAULT NULL,
   `estado` int(11) DEFAULT 1,
+  `legajo` varchar(450) DEFAULT 'NULL',
   PRIMARY KEY (`id`),
   KEY `fk_inscripto_evento1_idx` (`evento_id`),
   KEY `fk_inscripto_persona1_idx` (`persona_id`),
   CONSTRAINT `fk_inscripto_evento1` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_inscripto_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `certificados`.`inscripto`
 --
 
 /*!40000 ALTER TABLE `inscripto` DISABLE KEYS */;
-INSERT INTO `inscripto` (`id`,`fecha_insc`,`evento_id`,`persona_id`,`estado`) VALUES 
- (1,'2019-10-24 00:00:00',1,1,1);
+INSERT INTO `inscripto` (`id`,`fecha_insc`,`evento_id`,`persona_id`,`estado`,`legajo`) VALUES 
+ (1,'2019-10-24 00:00:00',1,1,1,'1259/2019'),
+ (2,'2019-10-27 00:00:00',1,2,1,'NULL');
 /*!40000 ALTER TABLE `inscripto` ENABLE KEYS */;
 
 
@@ -269,21 +276,26 @@ DROP TABLE IF EXISTS `inscripto_certificado`;
 CREATE TABLE `inscripto_certificado` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fecha_obt` datetime DEFAULT NULL,
-  `inscripto_id` int(11) NOT NULL,
-  `certificado_evento_id` int(11) NOT NULL,
+  `inscripto_id` int(11) DEFAULT NULL,
+  `certificado_evento_id` int(11) DEFAULT NULL,
   `estado` int(11) DEFAULT 1,
+  `codigo_verificacion` varchar(450) DEFAULT 'NULL',
   PRIMARY KEY (`id`),
   KEY `fk_inscripto_certificado_inscripto1_idx` (`inscripto_id`),
   KEY `fk_inscripto_certificado_certificado_evento1_idx` (`certificado_evento_id`),
   CONSTRAINT `fk_inscripto_certificado_certificado_evento1` FOREIGN KEY (`certificado_evento_id`) REFERENCES `certificado_evento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_inscripto_certificado_inscripto1` FOREIGN KEY (`inscripto_id`) REFERENCES `inscripto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `certificados`.`inscripto_certificado`
 --
 
 /*!40000 ALTER TABLE `inscripto_certificado` DISABLE KEYS */;
+INSERT INTO `inscripto_certificado` (`id`,`fecha_obt`,`inscripto_id`,`certificado_evento_id`,`estado`,`codigo_verificacion`) VALUES 
+ (1,'2019-10-25 00:00:00',1,1,1,'19102817561666'),
+ (4,'2019-10-27 00:00:00',1,3,1,'NULL'),
+ (5,'2019-10-27 00:00:00',2,1,1,'NULL');
 /*!40000 ALTER TABLE `inscripto_certificado` ENABLE KEYS */;
 
 
@@ -294,21 +306,27 @@ CREATE TABLE `inscripto_certificado` (
 DROP TABLE IF EXISTS `inscripto_evento_requisito`;
 CREATE TABLE `inscripto_evento_requisito` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `inscripto_id` int(11) NOT NULL,
-  `certificado_evento_requisito_id` int(11) NOT NULL,
-  `excluir` tinyint(4) DEFAULT 0 COMMENT 'para casos en que un inscripto no necesite cumplir el requisito',
+  `inscripto_id` int(11) DEFAULT NULL,
+  `certificado_evento_requisito_id` int(11) DEFAULT NULL,
+  `excluir` tinyint(1) DEFAULT NULL COMMENT 'para casos en que un inscripto no necesite cumplir el requisito',
   PRIMARY KEY (`id`),
   KEY `fk_inscripto_evento_requisito_inscripto1_idx` (`inscripto_id`),
   KEY `fk_inscripto_evento_requisito_certificado_evento_requisito1_idx` (`certificado_evento_requisito_id`),
   CONSTRAINT `fk_inscripto_evento_requisito_certificado_evento_requisito1` FOREIGN KEY (`certificado_evento_requisito_id`) REFERENCES `certificado_evento_requisito` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_inscripto_evento_requisito_inscripto1` FOREIGN KEY (`inscripto_id`) REFERENCES `inscripto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `certificados`.`inscripto_evento_requisito`
 --
 
 /*!40000 ALTER TABLE `inscripto_evento_requisito` DISABLE KEYS */;
+INSERT INTO `inscripto_evento_requisito` (`id`,`inscripto_id`,`certificado_evento_requisito_id`,`excluir`) VALUES 
+ (3,1,1,0),
+ (4,1,3,0),
+ (5,1,4,0),
+ (6,1,5,0),
+ (7,2,1,0);
 /*!40000 ALTER TABLE `inscripto_evento_requisito` ENABLE KEYS */;
 
 
@@ -347,7 +365,7 @@ CREATE TABLE `persona` (
   `fecha_nac` date DEFAULT NULL,
   `estado` int(11) DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `certificados`.`persona`
@@ -355,7 +373,8 @@ CREATE TABLE `persona` (
 
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
 INSERT INTO `persona` (`id`,`apellido_nombre`,`dni`,`direccion`,`email`,`telefono`,`sexo`,`fecha_nac`,`estado`) VALUES 
- (1,'RAMIREZ JONATHAN ALEXIS','33137641','CALLE 2 326','jonny_0385@hotmail.com','4221259','M','1987-08-18',1);
+ (1,'RAMIREZ JONATHAN ALEXIS','33137641','CALLE 2 326','jonny_0385@hotmail.com','4221259','M','1987-08-18',1),
+ (2,'FRAGALITI MARIA BELEN','32568784','3 DE FEBRERO 330','belenfragaliti@gmail.com','154896571','F','1987-01-15',1);
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 
 
@@ -369,7 +388,7 @@ CREATE TABLE `requisito` (
   `descripcion` varchar(45) DEFAULT NULL,
   `estado` int(11) DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `certificados`.`requisito`
@@ -378,7 +397,9 @@ CREATE TABLE `requisito` (
 /*!40000 ALTER TABLE `requisito` DISABLE KEYS */;
 INSERT INTO `requisito` (`id`,`descripcion`,`estado`) VALUES 
  (1,'ASISTIR AL EVENTO',1),
- (2,'APROBAR EL EVENTO',1);
+ (2,'APROBAR EL EVENTO',1),
+ (3,'PAGAR INSCRIPCION',1),
+ (4,'PAGAR CERTIFICACIÓN',1);
 /*!40000 ALTER TABLE `requisito` ENABLE KEYS */;
 
 
@@ -393,13 +414,15 @@ CREATE TABLE `template` (
   `codigo` longtext DEFAULT NULL,
   `estado` int(11) DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `certificados`.`template`
 --
 
 /*!40000 ALTER TABLE `template` DISABLE KEYS */;
+INSERT INTO `template` (`id`,`descripcion`,`codigo`,`estado`) VALUES 
+ (1,'curso_template','<p>Por cuanto #el-la# #apellidoynombre#<br />\r\nDNI N&ordm; #dni# Legajo N&deg; #legajo#&nbsp; &nbsp;ha aprobado el <strong>#cursonombre#</strong> que corresponde a la:</p>\r\n\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong>#correspondiente#</strong></p>\r\n\r\n<p>Resoluci&oacute;n Rectoral N.&ordm; #resolucion#, con un total de #horas# hs reloj, por el cual se le otorga el presente certificado.<br />\r\nSe &nbsp;expide el mismo en la provincia de Santiago del Estero, Rep&uacute;blica Argentina.<br />\r\nA los #dia#&nbsp;d&iacute;as del mes de #mes#&nbsp;del a&ntilde;o #anio#</p>',1);
 /*!40000 ALTER TABLE `template` ENABLE KEYS */;
 
 
