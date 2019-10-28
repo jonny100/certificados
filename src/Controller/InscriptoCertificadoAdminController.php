@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Application\ReportBundle\Report\ReportPDF;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 final class InscriptoCertificadoAdminController extends CRUDController
 {
@@ -50,7 +51,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
             // set bacground image
             for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
                 $pdf->setPage($i);
-                $img_file = dirname(__FILE__).'/../Resources/public/images/imagencertificado.jpg';
+                $img_file = $this->getParameter('kernel.project_dir') . '/public/images/imagencertificado.jpg';
                 $pdf->Image($img_file, 0, 0, 300, 210, '', '', '', false, 300, '', false, false, 0);
             }
             // restore auto-page-break status
@@ -71,13 +72,12 @@ final class InscriptoCertificadoAdminController extends CRUDController
                 'module_height' => 1 // height of a single module in points
             );
               
-
             $json = $object->getCodigoQR();//'{ "datos": [{ "id": "'.$object->getId().'", "clase": "caso", "descripcion": "'.$object->getNumeroLegajo(). ' - ' .$object->getAnioLegajo().'-'.$object.'"  }] }';
-
-            $text = $inscriptoCertificado->getCertificadoEvento()->getTemplate()->getCodigo();  
+          
+            $text = $this->reemplazarVariables($inscriptoCertificado);
 
 //            $text = 'texto'; //$object->getTextoCaratula();
-            $pdf->writeHTMLCell(0,0, 20, 40, $text, 0, 0, 0, true,"C", 0);
+            $pdf->writeHTMLCell(0,0, 80, 30, $text, 0, 0, 0, true,"L", 0);
             $pdf->write2DBarcode( $json, 'QRCODE,L', 240, 115, 40, 40, $style, 'N');
             $file = $pdf->Output('certificado.pdf', 'S');
             
@@ -85,6 +85,41 @@ final class InscriptoCertificadoAdminController extends CRUDController
             $response->headers->set('Content-Type', 'application/pdf');
             $response->headers->set('Content-Disposition', 'filename="certificado.pdf"');
             return $response;
+    }
+    
+    public function reemplazarVariables($obj){
+        $el_la = 'el Sr.';
+        if($obj->getInscripto()->getPersona()->getSexo() == 'F') $el_la = 'la Sra.';
+        
+        $apellydoynombre = $obj->getInscripto()->getPersona()->getApellidoNombre();
+        $dni = $obj->getInscripto()->getPersona()->getDNI();
+        $legajo = $obj->getInscripto()->getLegajo();
+        $cursonombre = $obj->getCertificadoEvento()->getEvento()->getDescripcion();
+        $correspondiente = $obj->getCertificadoEvento()->getEvento()->getCorrespondiente();
+        $resolucion = $obj->getCertificadoEvento()->getEvento()->getResolucion();
+        $horas = $obj->getCertificadoEvento()->getEvento()->getHoras();
+        
+        $fechaactual = new \DateTime("now");
+        $dia = $fechaactual->format('d');
+        setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
+        $mes = ucwords(iconv('ISO-8859-2', 'UTF-8', strftime("%B", $fechaactual->getTimestamp())));
+        $anio = $fechaactual->format('Y');
+        
+        $template = $obj->getCertificadoEvento()->getTemplate()->getCodigo();  
+        $template = str_replace('#el-la#', $el_la, $template);
+        $template = str_replace('#apellidoynombre#', $apellydoynombre, $template);
+        $template = str_replace('#dni#', $dni, $template);
+        $template = str_replace('#legajo#', $legajo, $template);
+        $template = str_replace('#cursonombre#', $cursonombre, $template);
+        $template = str_replace('#correspondiente#', $correspondiente, $template);
+        $template = str_replace('#resolucion#', $resolucion, $template);
+        $template = str_replace('#horas#', $horas, $template);
+        
+        $template = str_replace('#dia#', $dia, $template);
+        $template = str_replace('#mes#', $mes, $template);
+        $template = str_replace('#anio#', $anio, $template);
+        
+        return $template;
     }
 
 }
