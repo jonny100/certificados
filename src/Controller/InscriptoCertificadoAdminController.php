@@ -105,7 +105,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
         $mes = ucwords(iconv('ISO-8859-2', 'UTF-8', strftime("%B", $fechaObt->getTimestamp())));
         $anio = $fechaObt->format('Y');
         
-        $template = $obj->getCertificadoEvento()->getTemplate()->getCodigo();  
+        $template = null !== $obj->getCertificadoEvento()->getTemplate() ? $obj->getCertificadoEvento()->getTemplate()->getCodigo() : '';  
         $template = str_replace('#el-la#', $el_la, $template);
         $template = str_replace('#apellidoynombre#', $apellydoynombre, $template);
         $template = str_replace('#dni#', $dni, $template);
