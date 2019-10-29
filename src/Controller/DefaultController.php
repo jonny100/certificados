@@ -18,24 +18,23 @@ class DefaultController extends Controller
     public function verificacionAction(Request $request)
     {
         
-        $form = $this->createFormBuilder()//()
-                ->add('dni', null, array('label' => 'DNI'))
-                ->add('codigoVerificacion')
+        $form = $this->createFormBuilder(null, array('attr' => array('class' => 'form-verificacion')))//()
+                ->add('dni', null, array('label' => 'DNI', "attr" => array('class' => 'form-control', 'placeholder' => 'DNI')))
+                ->add('codigoVerificacion', null, array('label' => 'Codigo de Verificación', "attr" => array('class' => 'form-control', 'placeholder' => 'Codigo de Verificación')))
                
-                ->add('validar', SubmitType::class, array('label' => 'Validar', "attr" => array('class' => "btn btn-success", 'style' => 'float:left')))
+                ->add('validar', SubmitType::class, array('label' => 'Validar', "attr" => array('class' => "btn btn-lg btn-primary btn-block")))
                 ->getForm();
         
         $form->handleRequest($request);
         
         //Si el pedido viene con las variables cargadas en get, realizo directamente la comprobacion
-        $dni = $request->request->get('dni');
-        $codigoVerificacion = $request->request->get('codigo_verificacion');
-        echo($dni);die();
+        $dni = $request->query->get('dni');
+        $codigoVerificacion = $request->query->get('codigo_verificacion');
+        
         $directo = false;
         if(isset($dni) && isset($codigoVerificacion)){
             $directo = true;
         }
-        
         if (($form->isSubmitted() && $form->isValid()) || $directo) { // si el formulario es valido
             if(!$directo){
                 $params = $form->getData();
@@ -55,7 +54,12 @@ class DefaultController extends Controller
             if($validado){
                 $vars = array(
                 'action' => 'verificacion',
-                '' => '',
+                'apellidoYNombre' => $inscriptoCertificado->getInscripto()->getPersona(),
+                'dni' => $dni,
+                'cursoNombre' => $inscriptoCertificado->getCertificadoEvento()->getEvento(),
+                'resolucion' => null !== $inscriptoCertificado->getCertificadoEvento()->getEvento()->getResolucion() ? $inscriptoCertificado->getCertificadoEvento()->getEvento()->getResolucion() : '',
+                'horas' => null !== $inscriptoCertificado->getCertificadoEvento()->getEvento()->getHoras() ? $inscriptoCertificado->getCertificadoEvento()->getEvento()->getHoras() : '',
+                'fechaObt' => $inscriptoCertificado->getFechaObt(),
                 'form' => $form->createView(),
                 );
                 

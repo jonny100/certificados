@@ -1,1 +1,72 @@
-VERIFICACION CORRECTA
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Verificacion de certificados - Escuela para la Innovacion Educativa</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+        <style>
+            html,
+            body {
+                height: 100%;
+            }
+
+            body {
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-align: center;
+                align-items: center;
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #f5f5f5;
+            }
+
+            .div-center {
+                width: 100%;
+                max-width: 420px;
+                padding: 15px;
+                margin: auto;
+            }
+
+
+        </style>
+    </head>
+    <body class="div-center">
+        <div class="text-center mb-4">
+            <img class="mb-4" src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Verificación Correcta</h1>
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th scope="row">Apellido y nombre</th>
+                        <td>{{ apellidoYNombre }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">DNI</th>
+                        <td>{{ dni }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Curso</th>
+                        <td>{{ cursoNombre }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Resolución</th>
+                        <td>{{ resolucion }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Horas</th>
+                        <td>{{ horas }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fecha Obtención</th>
+                        <td>{{ fechaObt | date('d-m-Y') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+</html>
+

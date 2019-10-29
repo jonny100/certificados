@@ -72,13 +72,12 @@ final class InscriptoCertificadoAdminController extends CRUDController
                 'module_height' => 1 // height of a single module in points
             );
               
-            $json = $object->getCodigoQR();//'{ "datos": [{ "id": "'.$object->getId().'", "clase": "caso", "descripcion": "'.$object->getNumeroLegajo(). ' - ' .$object->getAnioLegajo().'-'.$object.'"  }] }';
-          
+            $qr = $request->getHttpHost() . '/verificacion?dni=' . $inscriptoCertificado->getInscripto()->getPersona()->getDNI() . '&codigo_verificacion=' . $inscriptoCertificado->getCodigoVerificacion();
+
             $text = $this->reemplazarVariables($inscriptoCertificado);
 
-//            $text = 'texto'; //$object->getTextoCaratula();
             $pdf->writeHTMLCell(0,0, 80, 30, $text, 0, 0, 0, true,"L", 0);
-            $pdf->write2DBarcode( $json, 'QRCODE,L', 240, 113, 40, 40, $style, 'N');
+            $pdf->write2DBarcode( $qr, 'QRCODE,L', 240, 113, 40, 40, $style, 'N');
             $pdf->writeHTMLCell(0,0, 239, 152, $inscriptoCertificado->getCodigoVerificacion());
             $file = $pdf->Output('certificado.pdf', 'S');
             
@@ -100,11 +99,11 @@ final class InscriptoCertificadoAdminController extends CRUDController
         $resolucion = $obj->getCertificadoEvento()->getEvento()->getResolucion();
         $horas = $obj->getCertificadoEvento()->getEvento()->getHoras();
         
-        $fechaactual = new \DateTime("now");
-        $dia = $fechaactual->format('d');
+        $fechaObt = $obj->getFechaObt();
+        $dia = $fechaObt->format('d');
         setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
-        $mes = ucwords(iconv('ISO-8859-2', 'UTF-8', strftime("%B", $fechaactual->getTimestamp())));
-        $anio = $fechaactual->format('Y');
+        $mes = ucwords(iconv('ISO-8859-2', 'UTF-8', strftime("%B", $fechaObt->getTimestamp())));
+        $anio = $fechaObt->format('Y');
         
         $template = $obj->getCertificadoEvento()->getTemplate()->getCodigo();  
         $template = str_replace('#el-la#', $el_la, $template);

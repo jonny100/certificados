@@ -11,6 +11,6 @@ sonata_user_admin_resetting:
     prefix: /admin/resetting
     
 app_default_verificacion:
-    path: /admin/verificacion
+    path: /verificacion
     defaults:
         _controller: App\Controller\DefaultController::verificacionAction
