@@ -70,7 +70,9 @@ class DependentFilteredEntitySubscriber implements EventSubscriberInterface
 
     private function addDependantForm($form, $parent_id, $options)
     {
-        $parent_property = $options['parent_entity_field'];
+        
+        $parent_property = $options['parent_entity_field'];//evento
+        
         $field_name = $options['entity_field'];
 
         $query_builder = function (EntityRepository $repository) use ($parent_id, $parent_property) {

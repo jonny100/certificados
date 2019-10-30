@@ -1,0 +1,16 @@
+application_tools:
+    dependent_filtered_entities:
+        certificadoEvento_by_evento:
+            form_options:
+                entity_alias: certificadoEvento_by_evento
+                class: App:CertificadoEvento
+                entity_field: certificado
+                parent_entity_field: evento
+                parent_form_field: evento
+                choice_label: certificado
+                no_result_msg: 'Sin resultados'
+                placeholder: '--seleccionar--'
+            search_options:
+                role: ROLE_USER
+                order_field: certificado
+                order_direction: ASC

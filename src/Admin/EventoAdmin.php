@@ -11,9 +11,14 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\DatePickerType;
 use Sonata\CoreBundle\Form\Type\CollectionType;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 final class EventoAdmin extends AbstractAdmin
 {
+    protected function configureRoutes(RouteCollection $collection) {
+        $collection->add('imprimirMasivo');     
+        $collection->add('generarCertificadosMasivo'); 
+    }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {

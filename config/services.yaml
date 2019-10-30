@@ -124,6 +124,20 @@ services:
         arguments: ['@service_container']
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+            
+    application_tools.type.dependent_filtered_entity:
+        public: true
+        class: App\Application\ToolsBundle\Form\Type\DependentFilteredEntityType
+        arguments: ["@doctrine", "@property_accessor"]
+        tags:
+            - { name: form.type, alias: apptools_dependent_filtered_entity }
+       
+    application_tools.dependent_filtered_entity_subscriber:
+        public: true
+        class: App\Application\ToolsBundle\Form\EventListener\DependentFilteredEntitySubscriber
+        arguments: ["@property_accessor"]
+        tags:
+            - { name: form.type, alias: apptools_dependent_filtered_entity_subscriber } 
         
 #
 # INLINE VALIDATION SERVICES

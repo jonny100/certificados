@@ -14,13 +14,3 @@ app_default_verificacion:
     path: /verificacion
     defaults:
         _controller: App\Controller\DefaultController::verificacionAction
-        
-app_default_imprimirmasivo:
-    path: /imprimirmasivo
-    defaults:
-        _controller: App\Controller\DefaultController::imprimirMasivoAction
-        
-app_default_generarcertificadosmasivo:
-    path: /generarcertificadosmasivo
-    defaults:
-        _controller: App\Controller\DefaultController::generarCertificadosMasivoAction
