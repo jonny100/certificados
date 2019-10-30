@@ -1,8 +1,48 @@
 sonata_admin:
     title: 'Certificados'
+    title_logo: bundles/images/logo-eie-2.png
     templates:
        
     dashboard: 
+        groups:
+            admin:
+                label: 'Eventos'
+                icon: '<i class="fa fa-archive"></i>'
+                items:  
+                    - admin.evento
+                    - admin.tipo_evento
+            admin2:
+                label: 'Certificados'
+                icon: '<i class="fa fa-archive"></i>'
+                items:  
+                    - admin.certificado
+                    - admin.tipo_certificado
+                    - admin.template
+                    - route: admin_app_evento_imprimirMasivo
+                      label: 'Impresión Masiva'
+            admin3:
+                label: 'Personas'
+                icon: '<i class="fa fa-archive"></i>'
+                items:  
+                    - admin.persona
+            admin4:
+                label: 'Requisitos'
+                icon: '<i class="fa fa-archive"></i>'
+                items:  
+                    - admin.requisito
+            admin5:
+                label: 'Validación'
+                icon: '<i class="fa fa-archive"></i>'
+                items:  
+                    - route: app_default_verificacion
+                      label: 'Validación'
+            admin6:
+                label: 'Usuarios'
+                icon: '<i class="fa fa-archive"></i>'
+                items:  
+                    - sonata.user.admin.user
+                    - sonata.user.admin.group
+                    
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
         
