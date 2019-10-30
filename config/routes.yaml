@@ -14,3 +14,7 @@ app_default_verificacion:
     path: /verificacion
     defaults:
         _controller: App\Controller\DefaultController::verificacionAction
+        
+ApplicationToolsBundle:
+    resource: "@ApplicationToolsBundle/Resources/config/routing.yml"
+    prefix:   /

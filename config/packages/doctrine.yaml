@@ -19,6 +19,7 @@ doctrine:
                     SonataUserBundle: ~
                     FOSUserBundle: ~
                     ApplicationSonataUserBundle: ~
+                    ApplicationToolsBundle: ~ 
                     App:
                         is_bundle: false
                         type: annotation

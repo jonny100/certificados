@@ -75,7 +75,7 @@ final class EventoAdminController extends CRUDController
                     $this->generarCertificadosMasivoAction($inscriptoCertificados, $request);
                 }               
             }else{
-                //mensaje no existen datos
+                $this->addFlash('sonata_flash_info', 'No existen certificados para el filtro seleccionado.');
             }
         } 
 
