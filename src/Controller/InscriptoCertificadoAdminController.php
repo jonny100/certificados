@@ -51,7 +51,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
             // set bacground image
             for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
                 $pdf->setPage($i);
-                $img_file = $this->getParameter('kernel.project_dir') . '/public/bundles/images/imagencertificado.png';
+                $img_file = $this->getParameter('kernel.project_dir') . '/public/bundles/images/imagencertificado.jpg';
                 $pdf->Image($img_file, 0, 0, 300, 210, '', '', '', false, 300, '', false, false, 0);
             }
             // restore auto-page-break status
@@ -72,7 +72,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
                 'module_height' => 1 // height of a single module in points
             );
               
-            $qr = $request->getHttpHost() . '/verificacion?dni=' . $inscriptoCertificado->getInscripto()->getPersona()->getDNI() . '&codigo_verificacion=' . $inscriptoCertificado->getCodigoVerificacion();
+            $qr = $request->getSchemeAndHttpHost() . '/verificacion?dni=' . $inscriptoCertificado->getInscripto()->getPersona()->getDNI() . '&codigo_verificacion=' . $inscriptoCertificado->getCodigoVerificacion();
 
             $text = $this->reemplazarVariables($inscriptoCertificado);
 

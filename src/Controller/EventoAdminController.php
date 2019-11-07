@@ -136,7 +136,7 @@ final class EventoAdminController extends CRUDController
                 'module_height' => 1 // height of a single module in points
             );
 
-            $qr = $request->getHttpHost() . '/verificacion?dni=' . $inscriptoCertificado->getInscripto()->getPersona()->getDNI() . '&codigo_verificacion=' . $inscriptoCertificado->getCodigoVerificacion();
+            $qr = $request->getSchemeAndHttpHost() . '/verificacion?dni=' . $inscriptoCertificado->getInscripto()->getPersona()->getDNI() . '&codigo_verificacion=' . $inscriptoCertificado->getCodigoVerificacion();
 
             $text = $this->reemplazarVariables($inscriptoCertificado);
 
