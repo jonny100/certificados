@@ -19,7 +19,7 @@ security:
                 check_path:     /admin/login_check
                 failure_path:   null
                 always_use_default_target_path: false
-                default_target_path: /admin/dashboard
+                default_target_path: /dashboard
             logout:
                 path:           /admin/logout
                 target:         /admin/login
