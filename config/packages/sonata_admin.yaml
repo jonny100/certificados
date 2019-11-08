@@ -7,13 +7,13 @@ sonata_admin:
         groups:
             admin:
                 label: 'Eventos'
-                icon: '<i class="fa fa-archive"></i>'
+                icon: '<i class="fa fa-calendar"></i>'
                 items:  
                     - admin.evento
                     - admin.tipo_evento
             admin2:
                 label: 'Certificados'
-                icon: '<i class="fa fa-archive"></i>'
+                icon: '<i class="fa fa-certificate"></i>'
                 items:  
                     - admin.certificado
                     - admin.tipo_certificado
@@ -22,23 +22,23 @@ sonata_admin:
                       label: 'Impresión Masiva'
             admin3:
                 label: 'Personas'
-                icon: '<i class="fa fa-archive"></i>'
+                icon: '<i class="fa fa-users"></i>'
                 items:  
                     - admin.persona
             admin4:
                 label: 'Requisitos'
-                icon: '<i class="fa fa-archive"></i>'
+                icon: '<i class="fa fa-tasks"></i>'
                 items:  
                     - admin.requisito
             admin5:
                 label: 'Validación'
-                icon: '<i class="fa fa-archive"></i>'
+                icon: '<i class="fa fa-check"></i>'
                 items:  
                     - route: app_default_verificacion
                       label: 'Validación'
             admin6:
                 label: 'Usuarios'
-                icon: '<i class="fa fa-archive"></i>'
+                icon: '<i class="fa fa-user"></i>'
                 items:  
                     - sonata.user.admin.user
                     - sonata.user.admin.group
