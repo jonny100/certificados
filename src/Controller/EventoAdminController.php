@@ -22,7 +22,7 @@ final class EventoAdminController extends CRUDController
         $subscriber = $this->get('application_tools.dependent_filtered_entity_subscriber');
 
         $form_options = $dependant_entities['certificadoEvento_by_evento']['form_options'];
-        $form_options = array_merge($form_options, array('required'=>true));        
+        $form_options = array_merge($form_options, array('required'=>true, 'attr'=>array('data-sonata-select2'=>'false')));        
         $subscriber->addField('certificado', $form_options); 
         
         
@@ -33,7 +33,7 @@ final class EventoAdminController extends CRUDController
                                         ->orderBy('e.descripcion');
                                         },
                                         'class' => 'App\Entity\Evento',
-                                        'required' => true,
+                                        'required' => true
                                          )                                                  
                      )
                 ->add('certificado', DependentFilteredEntityType::class, $form_options)
