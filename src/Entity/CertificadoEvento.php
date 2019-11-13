@@ -57,10 +57,16 @@ class CertificadoEvento
      * @ORM\OneToMany(targetEntity="CertificadoEventoRequisito", mappedBy="certificadoEvento", cascade={"all"}, orphanRemoval=true)
      */
     protected $requisitos;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="CertificadoEventoFirma", mappedBy="certificadoEvento", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $firma;
 
     public function __construct()
     {
         $this->requisitos = new ArrayCollection();
+        $this->firma = new ArrayCollection();
     }
     
     public function __toString() {
@@ -133,6 +139,37 @@ class CertificadoEvento
             // set the owning side to null (unless already changed)
             if ($requisito->getCertificadoEvento() === $this) {
                 $requisito->setCertificadoEvento(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CertificadoEventoFirma[]
+     */
+    public function getFirma(): Collection
+    {
+        return $this->firma;
+    }
+
+    public function addFirma(CertificadoEventoFirma $firma): self
+    {
+        if (!$this->firma->contains($firma)) {
+            $this->firma[] = $firma;
+            $firma->setCertificadoEvento($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFirma(CertificadoEventoFirma $firma): self
+    {
+        if ($this->firma->contains($firma)) {
+            $this->firma->removeElement($firma);
+            // set the owning side to null (unless already changed)
+            if ($firma->getCertificadoEvento() === $this) {
+                $firma->setCertificadoEvento(null);
             }
         }
 

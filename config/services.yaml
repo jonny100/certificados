@@ -72,6 +72,7 @@ services:
         public: true
         calls:
             - [ addChild, ["@admin.certificado_evento_requisito"]] 
+            - [ addChild, ["@admin.certificado_evento_firma"]] 
         
 
     admin.persona:
@@ -147,4 +148,16 @@ services:
         class: App\Validator\InscriptoCertificadoInlineValidator
         public: true
 
-        
+    admin.firma:
+        class: App\Admin\FirmaAdmin
+        arguments: [~, App\Entity\Firma, App\Controller\FirmaAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Firma }
+        public: true
+
+    admin.certificado_evento_firma:
+        class: App\Admin\CertificadoEventoFirmaAdmin
+        arguments: [~, App\Entity\CertificadoEventoFirma, App\Controller\CertificadoEventoFirmaAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CertificadoEventoFirma }
+        public: true
