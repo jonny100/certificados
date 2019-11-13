@@ -11,6 +11,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\DatePickerType;
 use Sonata\AdminBundle\Form\Type\ModelListType;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 
 final class InscriptoAdmin extends AbstractAdmin
 {
@@ -70,4 +71,29 @@ final class InscriptoAdmin extends AbstractAdmin
             //->add('estado')
             ;
     }
+    
+    protected function configureBatchActions($actions)
+    {
+        $requisitosTodos = array();
+        $evento = $this->getParent()->getSubject();
+        foreach ($evento->getCertificados() as $certificado){
+            foreach ($certificado->getRequisitos() as $requisito){
+                if(!in_array($requisito, $requisitosTodos)){
+                    $requisitosTodos[] = $requisito;
+                }        
+            }
+        }
+        
+        foreach ($requisitosTodos as $req){
+            $actions['Otorgar el requisito ' . $req->getRequisito()->getDescripcion()] = [
+                   'ask_confirmation' => true,
+                   'label' => 'Otorgar el requisito ' . $req->getRequisito()->getDescripcion(),
+                   'CertificadoEventoRequisitoId' => $req->getId()
+               ];
+        }
+        
+        return $actions;
+    }
+    
+    
 }
