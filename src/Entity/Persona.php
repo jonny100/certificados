@@ -66,7 +66,7 @@ class Persona
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="fecha_nac", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="fecha_nac", type="date", nullable=true, options={"default"=NULL})
      */
     private $fechaNac;
 

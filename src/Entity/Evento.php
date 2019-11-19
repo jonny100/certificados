@@ -33,14 +33,14 @@ class Evento
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="fecha_ini", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="fecha_ini", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $fechaIni;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="fecha_fin", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="fecha_fin", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $fechaFin;
 

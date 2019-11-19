@@ -26,7 +26,7 @@ class Inscripto
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="fecha_insc", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="fecha_insc", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $fechaInsc;
 

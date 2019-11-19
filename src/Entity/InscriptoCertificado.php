@@ -24,7 +24,7 @@ class InscriptoCertificado
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="fecha_obt", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="fecha_obt", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $fechaObt;
 
