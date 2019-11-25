@@ -16,6 +16,7 @@ final class InscriptoCertificadoAdmin extends AbstractAdmin
 {
     protected function configureRoutes(RouteCollection $collection) {               
         $collection->add('certificado', $this->getRouterIdParameter() . '/certificado');
+        $collection->add('enviarcertificadomail', $this->getRouterIdParameter() . '/enviarcertificadomail');
     }
     
     public function  configure()
@@ -46,6 +47,7 @@ final class InscriptoCertificadoAdmin extends AbstractAdmin
                     'edit' => [],
                     'delete' => [],
                     'certificadopdf' => ['template' => 'InscriptoCertificadoAdmin/list__action_certificado.html.twig'],
+                    'certificadomail' => ['template' => 'InscriptoCertificadoAdmin/list__action_certificado_mail.html.twig'],
                 ],
             ]);
     }

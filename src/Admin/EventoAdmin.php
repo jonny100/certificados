@@ -16,7 +16,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 final class EventoAdmin extends AbstractAdmin
 {
     protected function configureRoutes(RouteCollection $collection) {
-        $collection->add('imprimirMasivo');     
+        $collection->add('imprimirMasivo'); 
         $collection->add('generarCertificadosMasivo'); 
     }
 

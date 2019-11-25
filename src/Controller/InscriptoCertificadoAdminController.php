@@ -121,5 +121,43 @@ final class InscriptoCertificadoAdminController extends CRUDController
         
         return $template;
     }
+    
+    public function enviarCertificadoMailAction(Request $request, \Swift_Mailer $mailer)
+    {
+    $object = $this->admin->getSubject();
+    $id = $request->get($this->admin->getIdParameter());
+    $inscriptoCertificado = $this->admin->getObject($id);  
+    
+    $mail = $inscriptoCertificado->getInscripto()->getPersona()->getEmail();
+    if (isset($mail)){
+        $url = $this->admin->generateObjectUrl('certificado', $object);
+        $message = (new \Swift_Message('Hello Email'))
+            ->setFrom('psykojonny@gmail.com')
+            ->setTo($mail)
+            ->setBody(
+                $this->renderView(
+                    // templates/emails/registration.html.twig
+                    'emails/descargarCertificado.html.twig',
+                    ['url' => $url]
+                ),
+                'text/html'
+            )
+
+            // you can remove the following code if you don't define a text version for your emails
+    //        ->addPart(
+    //            $this->renderView(
+    //                // templates/emails/registration.txt.twig
+    //                'emails/registration.txt.twig',
+    //                ['name' => $name]
+    //            ),
+    //            'text/plain'
+    //        )
+        ;
+
+        $mailer->send($message);
+    }
+
+    return true;//$this->render(...);
+}
 
 }
