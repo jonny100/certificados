@@ -115,7 +115,7 @@ services:
 
     admin.inscripto_certificado:
         class: App\Admin\InscriptoCertificadoAdmin
-        arguments: [~, App\Entity\InscriptoCertificado, App\Controller\InscriptoCertificadoAdminController]
+        arguments: [~, App\Entity\InscriptoCertificado, App\Controller\InscriptoCertificadoAdminController]            
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: InscriptoCertificado }
         public: true

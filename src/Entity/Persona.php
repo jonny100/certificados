@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Persona
@@ -46,6 +47,7 @@ class Persona
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @Assert\Email(message = "El email '{{ value }}' no es un email válido.")
      */
     private $email;
 
