@@ -65,7 +65,7 @@ class InscriptoCertificado
     /**
      * @var string|null
      *
-     * @ORM\Column(name="texto_certificado", type="string", length=450, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="texto_certificado", type="text", length=0, nullable=true, options={"default"=NULL})
      */
     private $textoCertificado;
     
@@ -149,5 +149,7 @@ class InscriptoCertificado
 
         return $this;
     }
+
+
 
 }
