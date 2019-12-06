@@ -41,6 +41,34 @@ class CertificadoEventoFirma
      */
     private $firma;
     
+    /**
+    * @var float
+    *
+    * @ORM\Column(name="x_eje", type="decimal", precision=9, scale=6, nullable=true, options={"default"=0})
+    */
+    private $x;
+    
+    /**
+    * @var float
+    *
+    * @ORM\Column(name="y_eje", type="decimal", precision=9, scale=6, nullable=true, options={"default"=0})
+    */
+    private $y;
+    
+    /**
+    * @var float
+    *
+    * @ORM\Column(name="ancho", type="decimal", precision=9, scale=6, nullable=true, options={"default"=0})
+    */
+    private $ancho;
+    
+    /**
+    * @var float
+    *
+    * @ORM\Column(name="alto", type="decimal", precision=9, scale=6, nullable=true, options={"default"=0})
+    */
+    private $alto;
+    
     public function __toString() {
         return ''.$this->getFirma();
     }
@@ -70,6 +98,54 @@ class CertificadoEventoFirma
     public function setFirma(?Firma $firma): self
     {
         $this->firma = $firma;
+
+        return $this;
+    }
+
+    public function getX(): ?string
+    {
+        return $this->x;
+    }
+
+    public function setX(?string $x): self
+    {
+        $this->x = $x;
+
+        return $this;
+    }
+
+    public function getY(): ?string
+    {
+        return $this->y;
+    }
+
+    public function setY(?string $y): self
+    {
+        $this->y = $y;
+
+        return $this;
+    }
+
+    public function getAncho(): ?string
+    {
+        return $this->ancho;
+    }
+
+    public function setAncho(?string $ancho): self
+    {
+        $this->ancho = $ancho;
+
+        return $this;
+    }
+
+    public function getAlto(): ?string
+    {
+        return $this->alto;
+    }
+
+    public function setAlto(?string $alto): self
+    {
+        $this->alto = $alto;
 
         return $this;
     }

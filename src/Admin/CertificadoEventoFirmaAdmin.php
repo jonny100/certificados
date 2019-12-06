@@ -30,6 +30,10 @@ final class CertificadoEventoFirmaAdmin extends AbstractAdmin
         $listMapper
             //->add('id')
             ->add('firma')
+            ->add('x')
+            ->add('y')
+            ->add('ancho')
+            ->add('alto')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
@@ -44,6 +48,10 @@ final class CertificadoEventoFirmaAdmin extends AbstractAdmin
         $formMapper
             //->add('id')
             ->add('firma')
+            ->add('x')
+            ->add('y')
+            ->add('ancho')
+            ->add('alto')
             ;
     }
 
@@ -52,6 +60,10 @@ final class CertificadoEventoFirmaAdmin extends AbstractAdmin
         $showMapper
             //->add('id')
             ->add('firma')
+            ->add('x')
+            ->add('y')
+            ->add('ancho')
+            ->add('alto')
             ;
     }
 }

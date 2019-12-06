@@ -58,6 +58,14 @@ final class InscriptoCertificadoAdminController extends CRUDController
                 $img_file = $this->getParameter('kernel.project_dir') . '/public/bundles/images/imagencertificado.jpg';
                 $pdf->Image($img_file, 0, 0, 300, 210, '', '', '', false, 300, '', false, false, 0);
             }
+            // set firmas
+            for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
+                $pdf->setPage($i);
+                foreach($inscriptoCertificado->getCertificadoEvento()->getFirma() as $firma){
+                    $img_file = $firma->getFirma()->getUrl();
+                    $pdf->Image($img_file, $firma->getX(), $firma->getY(), $firma->getAncho(), $firma->getAlto(), '', '', '', false, 300, '', false, false, 0);
+                }
+            }
             // restore auto-page-break status
             $pdf->SetAutoPageBreak($auto_page_break, $bMargin);
             // set the starting point for the page content
@@ -81,9 +89,9 @@ final class InscriptoCertificadoAdminController extends CRUDController
             //$text = $this->reemplazarVariables($inscriptoCertificado);
             $text = $inscriptoCertificado->getTextoCertificado();
 
-            $pdf->writeHTMLCell(0,0, 80, 30, $text, 0, 0, 0, true,"L", 0);
-            $pdf->write2DBarcode( $qr, 'QRCODE,L', 240, 113, 40, 40, $style, 'N');
-            $pdf->writeHTMLCell(0,0, 239, 152, $inscriptoCertificado->getCodigoVerificacion());
+            $pdf->writeHTMLCell(0,0, 110, 30, $text, 0, 0, 0, true,"L", 0);
+            $pdf->write2DBarcode( $qr, 'QRCODE,L', 5, 113, 40, 40, $style, 'N');
+            $pdf->writeHTMLCell(0,0, 4, 152, $inscriptoCertificado->getCodigoVerificacion());
             $file = $pdf->Output('certificado.pdf', 'S');
             
             $response = new Response($file);

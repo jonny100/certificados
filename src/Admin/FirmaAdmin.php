@@ -29,7 +29,7 @@ final class FirmaAdmin extends AbstractAdmin
         $listMapper
             //->add('id')
             ->add('descripcion')
-            ->add('firma')
+            ->add('url')
             //->add('estado')
             ->add('_action', null, [
                 'actions' => [
@@ -46,6 +46,7 @@ final class FirmaAdmin extends AbstractAdmin
             //->add('id')
             ->add('descripcion')
             ->add('firma', CKEditorType::class)
+            ->add('url')
             //->add('estado')
             ;
     }
@@ -56,6 +57,7 @@ final class FirmaAdmin extends AbstractAdmin
             //->add('id')
             ->add('descripcion')
             ->add('firma')
+            ->add('url')
             //->add('estado')
             ;
     }

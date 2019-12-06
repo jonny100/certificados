@@ -34,6 +34,13 @@ class Firma
      * @ORM\Column(name="codigo", type="text", length=0, nullable=true, options={"default"="NULL"})
      */
     private $firma;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="url", type="string", length=450, nullable=true, options={"default"=NULL})
+     */
+    private $url;
 
     /**
      * @var int|null
@@ -86,6 +93,20 @@ class Firma
 
         return $this;
     }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(?string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    
 
     
 
