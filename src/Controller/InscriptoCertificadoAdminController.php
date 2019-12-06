@@ -78,7 +78,8 @@ final class InscriptoCertificadoAdminController extends CRUDController
               
             $qr = $request->getSchemeAndHttpHost() . '/verificacion?dni=' . $inscriptoCertificado->getInscripto()->getPersona()->getDNI() . '&codigo_verificacion=' . $inscriptoCertificado->getCodigoVerificacion();
 
-            $text = $this->reemplazarVariables($inscriptoCertificado);
+            //$text = $this->reemplazarVariables($inscriptoCertificado);
+            $text = $inscriptoCertificado->getTextoCertificado();
 
             $pdf->writeHTMLCell(0,0, 80, 30, $text, 0, 0, 0, true,"L", 0);
             $pdf->write2DBarcode( $qr, 'QRCODE,L', 240, 113, 40, 40, $style, 'N');
@@ -91,7 +92,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
             return $response;
     }
     
-    public function reemplazarVariables($obj){
+    /*public function reemplazarVariables($obj){
         $el_la = 'el Sr.';
         if($obj->getInscripto()->getPersona()->getSexo() == 'F') $el_la = 'la Sra.';
         
@@ -124,7 +125,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
         $template = str_replace('#anio#', $anio, $template);
         
         return $template;
-    }
+    }*/
     
     public function enviarCertificadoMailAction(Request $request)
     {

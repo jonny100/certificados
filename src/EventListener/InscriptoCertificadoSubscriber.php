@@ -58,9 +58,48 @@ class InscriptoCertificadoSubscriber implements EventSubscriber {
             $codigo_verificacion = date('ymdHis').rand(10,99);
             
             $entity->setCodigoVerificacion($codigo_verificacion);
+            
+            $texto = $this->reemplazarVariables($entity);
+            $entity->setTextoCertificado($texto);
+            
             $entityManager->persist($entity);
             $entityManager->flush();
         }
+    }
+    
+    public function reemplazarVariables($obj){
+        $el_la = 'el Sr.';
+        if($obj->getInscripto()->getPersona()->getSexo() == 'F') $el_la = 'la Sra.';
+        
+        $apellydoynombre = $obj->getInscripto()->getPersona()->getApellidoNombre();
+        $dni = $obj->getInscripto()->getPersona()->getDNI();
+        $legajo = $obj->getInscripto()->getLegajo();
+        $cursonombre = $obj->getCertificadoEvento()->getEvento()->getDescripcion();
+        $correspondiente = $obj->getCertificadoEvento()->getEvento()->getCorrespondiente();
+        $resolucion = $obj->getCertificadoEvento()->getEvento()->getResolucion();
+        $horas = $obj->getCertificadoEvento()->getEvento()->getHoras();
+        
+        $fechaObt = $obj->getFechaObt();
+        $dia = $fechaObt->format('d');
+        setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
+        $mes = ucwords(iconv('ISO-8859-2', 'UTF-8', strftime("%B", $fechaObt->getTimestamp())));
+        $anio = $fechaObt->format('Y');
+        
+        $template = null !== $obj->getCertificadoEvento()->getTemplate() ? $obj->getCertificadoEvento()->getTemplate()->getCodigo() : '';  
+        $template = str_replace('#el-la#', $el_la, $template);
+        $template = str_replace('#apellidoynombre#', $apellydoynombre, $template);
+        $template = str_replace('#dni#', $dni, $template);
+        $template = str_replace('#legajo#', $legajo, $template);
+        $template = str_replace('#cursonombre#', $cursonombre, $template);
+        $template = str_replace('#correspondiente#', $correspondiente, $template);
+        $template = str_replace('#resolucion#', $resolucion, $template);
+        $template = str_replace('#horas#', $horas, $template);
+        
+        $template = str_replace('#dia#', $dia, $template);
+        $template = str_replace('#mes#', $mes, $template);
+        $template = str_replace('#anio#', $anio, $template);
+        
+        return $template;
     }
 
     

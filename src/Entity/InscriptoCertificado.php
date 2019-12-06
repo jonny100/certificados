@@ -62,6 +62,13 @@ class InscriptoCertificado
      */
     private $codigoVerificacion;
     
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="texto_certificado", type="string", length=450, nullable=true, options={"default"="NULL"})
+     */
+    private $textoCertificado;
+    
     public function __toString() {
         return ''.$this->getCertificadoEvento();
     }
@@ -131,5 +138,16 @@ class InscriptoCertificado
         return $this;
     }
 
+    public function getTextoCertificado(): ?string
+    {
+        return $this->textoCertificado;
+    }
+
+    public function setTextoCertificado(?string $textoCertificado): self
+    {
+        $this->textoCertificado = $textoCertificado;
+
+        return $this;
+    }
 
 }
