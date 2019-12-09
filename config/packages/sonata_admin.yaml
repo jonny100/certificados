@@ -19,6 +19,7 @@ sonata_admin:
                     - admin.tipo_certificado
                     - admin.template
                     - admin.firma
+                    - admin.logo
                     - route: admin_app_evento_imprimirMasivo
                       label: 'Impresión Masiva'
             admin3:

@@ -10,19 +10,21 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-final class CertificadoEventoAdmin extends AbstractAdmin
+final class CertificadoEventoLogoAdmin extends AbstractAdmin
 {
-    public function  configure()
+    public function configure()
     {
-        $this->parentAssociationMapping = 'evento';
+        $this->parentAssociationMapping = 'certificadoEvento';
     } 
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('logo')
+            //->add('y')
+            //->add('ancho')
+            //->add('alto')
             ;
     }
 
@@ -30,16 +32,16 @@ final class CertificadoEventoAdmin extends AbstractAdmin
     {
         $listMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('logo')
+            ->add('x')
+            ->add('y')
+            ->add('ancho')
+            ->add('alto')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
                     'edit' => [],
                     'delete' => [],
-                    'requisitoslist' => ['template' => 'CertificadoEventoAdmin/list_action_requisitos.html.twig'],
-                    'firmaslist' => ['template' => 'CertificadoEventoAdmin/list_action_firmas.html.twig'],
-                    'logoslist' => ['template' => 'CertificadoEventoAdmin/list_action_logos.html.twig'],
                 ],
             ]);
     }
@@ -48,8 +50,11 @@ final class CertificadoEventoAdmin extends AbstractAdmin
     {
         $formMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('logo')
+            ->add('x')
+            ->add('y')
+            ->add('ancho')
+            ->add('alto')
             ;
     }
 
@@ -57,8 +62,11 @@ final class CertificadoEventoAdmin extends AbstractAdmin
     {
         $showMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('logo')
+            ->add('x')
+            ->add('y')
+            ->add('ancho')
+            ->add('alto')
             ;
     }
 }

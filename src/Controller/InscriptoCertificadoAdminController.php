@@ -66,6 +66,14 @@ final class InscriptoCertificadoAdminController extends CRUDController
                     $pdf->Image($img_file, $firma->getX(), $firma->getY(), $firma->getAncho(), $firma->getAlto(), '', '', '', false, 300, '', false, false, 0);
                 }
             }
+            // set logos
+            for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
+                $pdf->setPage($i);
+                foreach($inscriptoCertificado->getCertificadoEvento()->getLogo() as $logo){
+                    $img_file = $logo->getLogo()->getUrl();
+                    $pdf->Image($img_file, $logo->getX(), $logo->getY(), $logo->getAncho(), $logo->getAlto(), '', '', '', false, 300, '', false, false, 0);
+                }
+            }
             // restore auto-page-break status
             $pdf->SetAutoPageBreak($auto_page_break, $bMargin);
             // set the starting point for the page content

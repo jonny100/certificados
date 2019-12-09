@@ -73,6 +73,7 @@ services:
         calls:
             - [ addChild, ["@admin.certificado_evento_requisito"]] 
             - [ addChild, ["@admin.certificado_evento_firma"]] 
+            - [ addChild, ["@admin.certificado_evento_logo"]] 
         
 
     admin.persona:
@@ -160,4 +161,18 @@ services:
         arguments: [~, App\Entity\CertificadoEventoFirma, App\Controller\CertificadoEventoFirmaAdminController]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: CertificadoEventoFirma }
+        public: true
+
+    admin.logo:
+        class: App\Admin\LogoAdmin
+        arguments: [~, App\Entity\Logo, App\Controller\LogoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Logo }
+        public: true
+
+    admin.certificado_evento_logo:
+        class: App\Admin\CertificadoEventoLogoAdmin
+        arguments: [~, App\Entity\CertificadoEventoLogo, App\Controller\CertificadoEventoLogoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: CertificadoEventoLogo }
         public: true

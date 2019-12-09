@@ -10,19 +10,16 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-final class CertificadoEventoAdmin extends AbstractAdmin
+final class LogoAdmin extends AbstractAdmin
 {
-    public function  configure()
-    {
-        $this->parentAssociationMapping = 'evento';
-    } 
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('descripcion')
+            ->add('url')
+            //->add('estado')
             ;
     }
 
@@ -30,16 +27,14 @@ final class CertificadoEventoAdmin extends AbstractAdmin
     {
         $listMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('descripcion')
+            ->add('url')
+            //->add('estado')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
                     'edit' => [],
                     'delete' => [],
-                    'requisitoslist' => ['template' => 'CertificadoEventoAdmin/list_action_requisitos.html.twig'],
-                    'firmaslist' => ['template' => 'CertificadoEventoAdmin/list_action_firmas.html.twig'],
-                    'logoslist' => ['template' => 'CertificadoEventoAdmin/list_action_logos.html.twig'],
                 ],
             ]);
     }
@@ -48,8 +43,9 @@ final class CertificadoEventoAdmin extends AbstractAdmin
     {
         $formMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('descripcion')
+            ->add('url')
+            //->add('estado')
             ;
     }
 
@@ -57,8 +53,9 @@ final class CertificadoEventoAdmin extends AbstractAdmin
     {
         $showMapper
             //->add('id')
-            ->add('certificado')
-            ->add('template')
+            ->add('descripcion')
+            ->add('url')
+            //->add('estado')
             ;
     }
 }
