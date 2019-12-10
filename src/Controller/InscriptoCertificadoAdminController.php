@@ -27,6 +27,8 @@ final class InscriptoCertificadoAdminController extends CRUDController
             $id = $request->get($this->admin->getIdParameter());
             $inscriptoCertificado = $this->admin->getObject($id);
             
+            $sinFondo = $this->getRequest()->get('sin_fondo', 'false');
+
             if (!$object) {
                 throw new NotFoundHttpException(sprintf('No se pudo encontrar el objeto correspondiente a esta identificación : %s', $id));
             }
@@ -52,11 +54,13 @@ final class InscriptoCertificadoAdminController extends CRUDController
             $auto_page_break = $pdf->getAutoPageBreak();
             // disable auto-page-break
             $pdf->SetAutoPageBreak(false, 0);
-            // set bacground image
-            for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
-                $pdf->setPage($i);
-                $img_file = $this->getParameter('kernel.project_dir') . '/public/bundles/images/imagencertificado.jpg';
-                $pdf->Image($img_file, 0, 0, 300, 210, '', '', '', false, 300, '', false, false, 0);
+            if($sinFondo != 'true'){
+                // set bacground image
+                for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
+                    $pdf->setPage($i);
+                    $img_file = $this->getParameter('kernel.project_dir') . '/public/bundles/images/imagencertificado.jpg';
+                    $pdf->Image($img_file, 0, 0, 300, 210, '', '', '', false, 300, '', false, false, 0);
+                }
             }
             // set firmas
             for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
