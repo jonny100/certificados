@@ -1,6 +1,10 @@
 sonata_admin:
     title: 'Certificados'
     title_logo: bundles/images/logo-eie-2.png
+    
+    security:
+        handler: sonata.admin.security.handler.role
+    
     templates:
        
     dashboard: 
