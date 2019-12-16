@@ -24,9 +24,9 @@ class Certificado
     /**
      * @var string|null
      *
-     * @ORM\Column(name="descripcion", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="descripcion", type="string", length=450, nullable=true, options={"default"="NULL"})
      */
-    private $descripcion = 'NULL';
+    private $descripcion;
 
     /**
      * @var int|null
@@ -54,18 +54,6 @@ class Certificado
         return $this->id;
     }
 
-    public function getDescripcion(): ?string
-    {
-        return $this->descripcion;
-    }
-
-    public function setDescripcion(?string $descripcion): self
-    {
-        $this->descripcion = $descripcion;
-
-        return $this;
-    }
-
     public function getEstado(): ?int
     {
         return $this->estado;
@@ -86,6 +74,18 @@ class Certificado
     public function setTipoCertificado(?TipoCertificado $tipoCertificado): self
     {
         $this->tipoCertificado = $tipoCertificado;
+
+        return $this;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(?string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
 
         return $this;
     }
