@@ -43,9 +43,23 @@ final class InscriptoEventoRequisitoAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper): void
     {
+        $inscriptoId = $this->getRequest()->get('id');
+        $inscripto = $this->getParent()->getObject($inscriptoId);
+        $evento = $inscripto->getEvento();
+        
         $formMapper
             //->add('id')
-            ->add('certificadoEventoRequisito')
+            ->add('certificadoEventoRequisito',  null, array('label' => 'Requisito',
+                    'query_builder' => function ($repository)use($evento) {
+                        return $repository->createQueryBuilder('cer')
+                                ->join('cer.certificadoEvento', 'ce')
+                                ->where('ce.evento = :evento')
+                                ->groupBy('cer.requisito')
+                                ->setParameter('evento', $evento); //SOLAMENTE MUESTRO LOS CERTIFICADOS DEL EVENTO
+                    },
+                    'class' => 'App\Entity\CertificadoEventoRequisito',
+                    'required' => true
+                        ))
             ->add('excluir')
             ;
     }
