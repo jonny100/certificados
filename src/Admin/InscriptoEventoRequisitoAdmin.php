@@ -55,7 +55,7 @@ final class InscriptoEventoRequisitoAdmin extends AbstractAdmin
                                 ->join('cer.certificadoEvento', 'ce')
                                 ->where('ce.evento = :evento')
                                 ->groupBy('cer.requisito')
-                                ->setParameter('evento', $evento); //SOLAMENTE MUESTRO LOS CERTIFICADOS DEL EVENTO
+                                ->setParameter('evento', $evento); //SOLAMENTE MUESTRO LOS REQUISITOS DEL EVENTO
                     },
                     'class' => 'App\Entity\CertificadoEventoRequisito',
                     'required' => true
