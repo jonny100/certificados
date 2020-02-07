@@ -14,6 +14,16 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 final class InscriptoCertificadoAdmin extends AbstractAdmin
 {
+    public function getNewInstance() {
+        $instance = parent::getNewInstance();
+        
+        $em = $this->getModelManager()->getEntityManager('App:EstadoInscriptoCertificado');
+        $ec = $em->getReference('App:EstadoInscriptoCertificado', '1');
+        $instance->setEstado($ec);
+
+        return $instance;
+    }
+    
     protected function configureRoutes(RouteCollection $collection) {               
         $collection->add('certificado', $this->getRouterIdParameter() . '/certificado');
         $collection->add('enviarcertificadomail', $this->getRouterIdParameter() . '/enviarcertificadomail');
@@ -40,6 +50,7 @@ final class InscriptoCertificadoAdmin extends AbstractAdmin
             //->add('id')
             ->add('certificadoEvento')
             ->add('fechaObt', null, array('format' => 'd/m/Y'))
+            ->add('estado')
             //->add('estado')
             ->add('_action', null, [
                 'actions' => [

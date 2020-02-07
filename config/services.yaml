@@ -176,3 +176,10 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: CertificadoEventoLogo }
         public: true
+
+    admin.autorizacion_certificado:
+        class: App\Admin\AutorizacionCertificadoAdmin
+        arguments: [~, App\Entity\InscriptoCertificado, App\Controller\AutorizacionCertificadoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Autorizar }
+        public: true

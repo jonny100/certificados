@@ -1,3 +1,4 @@
+{% if object.estado.id == 2 %}
 <a href="{{ path('admin_app_inscriptocertificado_certificado', {'id': object.id}) }}" target="_blank" class="btn btn-sm btn-primary view_link" title="Imprimir Certificado">
         <i class="fa fa-print "></i> 
         Imprimir Certificado
@@ -6,3 +7,4 @@
         <i class="fa fa-print "></i> 
         Imprimir Certificado sin fondo
     </a>
+{% endif %}

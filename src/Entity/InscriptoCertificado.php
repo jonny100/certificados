@@ -29,11 +29,14 @@ class InscriptoCertificado
     private $fechaObt;
 
     /**
-     * @var int|null
+     * @var \EstadoInscriptoCertificado
      *
-     * @ORM\Column(name="estado", type="integer", nullable=true, options={"default"="1"})
+     * @ORM\ManyToOne(targetEntity="EstadoInscriptoCertificado")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="estado_inscripto_certificado_id", referencedColumnName="id")
+     * })
      */
-    private $estado = '1';
+    private $estado;
 
     /**
      * @var \CertificadoEvento
@@ -90,12 +93,36 @@ class InscriptoCertificado
         return $this;
     }
 
-    public function getEstado(): ?int
+    public function getCodigoVerificacion(): ?string
+    {
+        return $this->codigoVerificacion;
+    }
+
+    public function setCodigoVerificacion(?string $codigoVerificacion): self
+    {
+        $this->codigoVerificacion = $codigoVerificacion;
+
+        return $this;
+    }
+
+    public function getTextoCertificado(): ?string
+    {
+        return $this->textoCertificado;
+    }
+
+    public function setTextoCertificado(?string $textoCertificado): self
+    {
+        $this->textoCertificado = $textoCertificado;
+
+        return $this;
+    }
+
+    public function getEstado(): ?EstadoInscriptoCertificado
     {
         return $this->estado;
     }
 
-    public function setEstado(?int $estado): self
+    public function setEstado(?EstadoInscriptoCertificado $estado): self
     {
         $this->estado = $estado;
 
@@ -126,30 +153,7 @@ class InscriptoCertificado
         return $this;
     }
 
-    public function getCodigoVerificacion(): ?string
-    {
-        return $this->codigoVerificacion;
-    }
-
-    public function setCodigoVerificacion(?string $codigo_verificacion): self
-    {
-        $this->codigoVerificacion = $codigo_verificacion;
-
-        return $this;
-    }
-
-    public function getTextoCertificado(): ?string
-    {
-        return $this->textoCertificado;
-    }
-
-    public function setTextoCertificado(?string $textoCertificado): self
-    {
-        $this->textoCertificado = $textoCertificado;
-
-        return $this;
-    }
-
+    
 
 
 }

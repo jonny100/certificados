@@ -57,7 +57,7 @@ final class EventoAdminController extends CRUDController
             $inscriptoCertificados = $em->getRepository('App:InscriptoCertificado')
                     ->createQueryBuilder('ic')
                     ->leftJoin('ic.inscripto', 'i')
-                    ->where('i.evento = :evento and ic.certificadoEvento = :certificadoEvento and i.estado = 1 and ic.estado = 1 ')
+                    ->where('i.evento = :evento and ic.certificadoEvento = :certificadoEvento and i.estado = 1 and ic.estado = 2 ')
                     ->setParameter('evento', $evento)
                     ->setParameter('certificadoEvento', $certificadoEvento)
                     ->getQuery()->getResult();

@@ -48,6 +48,11 @@ sonata_admin:
                 items:  
                     - sonata.user.admin.user
                     - sonata.user.admin.group
+            admin7:
+                label: 'Autorización'
+                icon: '<i class="fa fa-legal"></i>'
+                items:  
+                    - admin.autorizacion_certificado
                     
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }

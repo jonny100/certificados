@@ -15,6 +15,12 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 final class EventoAdmin extends AbstractAdmin
 {
+    protected $datagridValues = array(
+        '_page' => 1, // display the first page (default = 1)
+        '_sort_order' => 'DESC', // reverse order (default = 'ASC')
+        '_sort_by' => 'id',          // name of the ordered field
+    );
+    
     protected function configureRoutes(RouteCollection $collection) {
         $collection->add('imprimirMasivo'); 
         $collection->add('generarCertificadosMasivo'); 
