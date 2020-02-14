@@ -123,7 +123,7 @@ services:
         
     my.inscriptocertificadosubscriber:
         class: App\EventListener\InscriptoCertificadoSubscriber
-        arguments: ['@service_container']
+        arguments: ['@security.token_storage']
         tags:
             - { name: doctrine.event_subscriber, connection: default }
             

@@ -10,6 +10,7 @@ use App\Application\ReportBundle\Report\ReportPDF;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Swift_SmtpTransport;
 use Swift_Mailer;
@@ -26,6 +27,10 @@ final class InscriptoCertificadoAdminController extends CRUDController
             $object = $this->admin->getSubject();
             $id = $request->get($this->admin->getIdParameter());
             $inscriptoCertificado = $this->admin->getObject($id);
+            
+            if ($inscriptoCertificado->getEstado()->getId() != 2) {
+                throw new AccessDeniedException();
+            }
             
             $sinFondo = $this->getRequest()->get('sin_fondo', 'false');
 
@@ -149,44 +154,49 @@ final class InscriptoCertificadoAdminController extends CRUDController
     
     public function enviarCertificadoMailAction(Request $request)
     {
-    // Create the Transport
-    $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
-            ->setUsername('certificadoseie@gmail.com')
-            ->setPassword('wlbgbkfwsssnlgkp')
-    ;
-
-    // Create the Mailer using your created Transport
-    $mailer = new Swift_Mailer($transport);
+        $object = $this->admin->getSubject();
+        $id = $request->get($this->admin->getIdParameter());
+        $inscriptoCertificado = $this->admin->getObject($id);  
         
-    $object = $this->admin->getSubject();
-    $id = $request->get($this->admin->getIdParameter());
-    $inscriptoCertificado = $this->admin->getObject($id);  
-    
-    $mail = $inscriptoCertificado->getInscripto()->getPersona()->getEmail();
-    if (isset($mail)){
-        $url = $request->getSchemeAndHttpHost() . $this->generateUrl('admin_app_inscriptocertificado_certificado', array('id' => $object->getId()));        
-        $evento = $inscriptoCertificado->getInscripto()->getEvento();
-        $message = (new \Swift_Message('Certificado del evento ' . $evento))
-            ->setFrom('certificadoseie@gmail.com')
-            ->setTo($mail)
-            ->setBody(
-                $this->renderView(
-                    // templates/emails/registration.html.twig
-                    'emails/descargarCertificado.html.twig',
-                    ['url' => $url]
-                ),
-                'text/html'
-            )
+        if ($inscriptoCertificado->getEstado()->getId() != 2) {
+            throw new AccessDeniedException();
+        }
+        // Create the Transport
+        $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
+                ->setUsername('certificadoseie@gmail.com')
+                ->setPassword('wlbgbkfwsssnlgkp')
         ;
 
-        $mailer->send($message); //todo
-        $this->addFlash('sonata_flash_success', 'Se envió correctamente el mail a: ' . $mail);
-    }else{
-        $this->addFlash('sonata_flash_error', 'El inscripto ' . $object->getInscripto() . ' no tiene un mail cargado');
-    }
+        // Create the Mailer using your created Transport
+        $mailer = new Swift_Mailer($transport);
 
-    $url = $this->generateUrl('admin_app_inscripto_inscriptocertificado_list', array('id' => $object->getInscripto()->getId()));
-    return new RedirectResponse($url);
-}
+
+
+        $mail = $inscriptoCertificado->getInscripto()->getPersona()->getEmail();
+        if (isset($mail)){
+            $url = $request->getSchemeAndHttpHost() . $this->generateUrl('admin_app_inscriptocertificado_certificado', array('id' => $object->getId()));        
+            $evento = $inscriptoCertificado->getInscripto()->getEvento();
+            $message = (new \Swift_Message('Certificado del evento ' . $evento))
+                ->setFrom('certificadoseie@gmail.com')
+                ->setTo($mail)
+                ->setBody(
+                    $this->renderView(
+                        // templates/emails/registration.html.twig
+                        'emails/descargarCertificado.html.twig',
+                        ['url' => $url]
+                    ),
+                    'text/html'
+                )
+            ;
+
+            $mailer->send($message); //todo
+            $this->addFlash('sonata_flash_success', 'Se envió correctamente el mail a: ' . $mail);
+        }else{
+            $this->addFlash('sonata_flash_error', 'El inscripto ' . $object->getInscripto() . ' no tiene un mail cargado');
+        }
+
+        $url = $this->generateUrl('admin_app_inscripto_inscriptocertificado_list', array('id' => $object->getInscripto()->getId()));
+        return new RedirectResponse($url);
+    }
 
 }

@@ -6,13 +6,15 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use App\Entity\InscriptoCertificado;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class InscriptoCertificadoSubscriber implements EventSubscriber {
 
-    protected $container;
+    private $tokenStorage;
 
-    public function __construct(ContainerInterface $container) {
-        $this->container = $container;
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
     }
 
 
@@ -56,12 +58,20 @@ class InscriptoCertificadoSubscriber implements EventSubscriber {
             * 2 dígito random (ej: 45).
             */
             $codigo_verificacion = date('ymdHis').rand(10,99);
-            
-            $entity->setCodigoVerificacion($codigo_verificacion);
+            if(is_null($entity->getCodigoVerificacion())){
+                $entity->setCodigoVerificacion($codigo_verificacion);
+            }
             
             $texto = $this->reemplazarVariables($entity);
             $entity->setTextoCertificado($texto);
             
+            if ($entity->getEstado()->getId() != 1) {
+                $fechaActual = new \DateTime();  
+                //var_dump($fechaActual);die();
+                $user = $this->tokenStorage->getToken()->getUser();
+                //$entity->setFechaAutorizacion($fechaActual);
+                $entity->setUserAutorizador($user);
+            }
             $entityManager->persist($entity);
             $entityManager->flush();
         }

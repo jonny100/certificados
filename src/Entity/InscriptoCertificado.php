@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -71,6 +72,25 @@ class InscriptoCertificado
      * @ORM\Column(name="texto_certificado", type="text", length=0, nullable=true, options={"default"=NULL})
      */
     private $textoCertificado;
+    
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="fecha_autorizacion", type="datetime", nullable=true, options={"default"=NULL})
+     */
+    private $fechaAutorizacion;
+    
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Application\Sonata\UserBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_autorizador", referencedColumnName="id")
+     * })
+     */
+    private $userAutorizador;
+    
+    
     
     public function __toString() {
         return ''.$this->getCertificadoEvento();
@@ -149,6 +169,30 @@ class InscriptoCertificado
     public function setInscripto(?Inscripto $inscripto): self
     {
         $this->inscripto = $inscripto;
+
+        return $this;
+    }
+
+    public function getFechaAutorizacion(): ?\DateTimeInterface
+    {
+        return $this->fechaAutorizacion;
+    }
+
+    public function setFechaAutorizacion(?\DateTimeInterface $fechaAutorizacion): self
+    {
+        $this->fechaAutorizacion = $fechaAutorizacion;
+
+        return $this;
+    }
+
+    public function getUserAutorizador(): ?User
+    {
+        return $this->userAutorizador;
+    }
+
+    public function setUserAutorizador(?User $userAutorizador): self
+    {
+        $this->userAutorizador = $userAutorizador;
 
         return $this;
     }
