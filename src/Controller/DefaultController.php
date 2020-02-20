@@ -83,7 +83,7 @@ class DefaultController extends Controller
     
     public function validarCertificado($dni, $codigoVerificacion){
         $repository = $this->getDoctrine()->getRepository('App:InscriptoCertificado');
-        $inscriptoCertificado = $repository->findOneBy(array('codigoVerificacion' => $codigoVerificacion));
+        $inscriptoCertificado = $repository->findOneBy(array('codigoVerificacion' => $codigoVerificacion, 'estado' => 2));
         
         if($inscriptoCertificado){
             if($inscriptoCertificado->getInscripto()->getPersona()->getDNI() == $dni){
