@@ -48,13 +48,14 @@ final class AutorizacionCertificadoAdmin extends AbstractAdmin
                                             3 => 'NO AUTORIZADO',)))
             //->add('codigoVerificacion')
             //->add('textoCertificado')
-//            ->add('_action', null, [
-//                'actions' => [
+            ->add('_action', null, [
+                'actions' => [
 //                    'show' => [],
 //                    'edit' => [],
 //                    'delete' => [],
-//                ],
-//            ])
+                      'certificadopdf' => ['template' => 'AutorizacionCertificadoAdmin/list__action_certificado.html.twig'],
+                ],
+            ])
             ;
     }
 

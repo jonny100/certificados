@@ -28,9 +28,9 @@ final class InscriptoCertificadoAdminController extends CRUDController
             $id = $request->get($this->admin->getIdParameter());
             $inscriptoCertificado = $this->admin->getObject($id);
             
-            if ($inscriptoCertificado->getEstado()->getId() != 2) {
-                throw new AccessDeniedException();
-            }
+//            if ($inscriptoCertificado->getEstado()->getId() != 2) {
+//                throw new AccessDeniedException();
+//            }
             
             $sinFondo = $this->getRequest()->get('sin_fondo', 'false');
 
@@ -59,14 +59,26 @@ final class InscriptoCertificadoAdminController extends CRUDController
             $auto_page_break = $pdf->getAutoPageBreak();
             // disable auto-page-break
             $pdf->SetAutoPageBreak(false, 0);
-            if($sinFondo != 'true'){
+            
+            //PARA ESTADO DIFERENTE A AUTORIZADO MOSTRAR UN FONDO BORRADOR
+            if ($inscriptoCertificado->getEstado()->getId() == 2) {
+                if($sinFondo != 'true'){
+                    // set bacground image
+                    for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
+                        $pdf->setPage($i);
+                        $img_file = $this->getParameter('kernel.project_dir') . '/public/bundles/images/imagencertificado.jpg';
+                        $pdf->Image($img_file, 0, 0, 300, 210, '', '', '', false, 300, '', false, false, 0);
+                    }
+                }
+            }else{
                 // set bacground image
                 for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
                     $pdf->setPage($i);
-                    $img_file = $this->getParameter('kernel.project_dir') . '/public/bundles/images/imagencertificado.jpg';
+                    $img_file = $this->getParameter('kernel.project_dir') . '/public/bundles/images/imagencertificadoBorrador.jpg';
                     $pdf->Image($img_file, 0, 0, 300, 210, '', '', '', false, 300, '', false, false, 0);
                 }
-            }
+            }    
+                
             // set firmas
             for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
                 $pdf->setPage($i);
@@ -107,8 +119,10 @@ final class InscriptoCertificadoAdminController extends CRUDController
             $text = $inscriptoCertificado->getTextoCertificado();
 
             $pdf->writeHTMLCell(0,0, 110, 30, $text, 0, 0, 0, true,"L", 0);
-            $pdf->write2DBarcode( $qr, 'QRCODE,L', 5, 113, 40, 40, $style, 'N');
-            $pdf->writeHTMLCell(0,0, 4, 152, $inscriptoCertificado->getCodigoVerificacion());
+            if ($inscriptoCertificado->getEstado()->getId() == 2){ //AUTORIZADO
+                $pdf->write2DBarcode( $qr, 'QRCODE,L', 5, 113, 40, 40, $style, 'N');
+                $pdf->writeHTMLCell(0,0, 4, 152, $inscriptoCertificado->getCodigoVerificacion());
+            }
             $file = $pdf->Output('certificado.pdf', 'S');
             
             $response = new Response($file);
