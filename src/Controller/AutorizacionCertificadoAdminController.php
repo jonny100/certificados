@@ -28,7 +28,7 @@ final class AutorizacionCertificadoAdminController extends CRUDController
                 $repository = $this->getDoctrine()->getRepository('App:EstadoInscriptoCertificado');
                 $estadoInscriptoCertificado = $repository->find(2);
                     
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
                 $inscriptoCertificado->setEstado($estadoInscriptoCertificado);
                 $em->persist($inscriptoCertificado);
                 $em->flush();
@@ -71,7 +71,7 @@ final class AutorizacionCertificadoAdminController extends CRUDController
                 $repository = $this->getDoctrine()->getRepository('App:EstadoInscriptoCertificado');
                 $estadoInscriptoCertificado = $repository->find(1);
                     
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
                 $inscriptoCertificado->setEstado($estadoInscriptoCertificado);
                 $em->persist($inscriptoCertificado);
                 $em->flush();
@@ -114,7 +114,7 @@ final class AutorizacionCertificadoAdminController extends CRUDController
                 $repository = $this->getDoctrine()->getRepository('App:EstadoInscriptoCertificado');
                 $estadoInscriptoCertificado = $repository->find(3);
                     
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
                 $inscriptoCertificado->setEstado($estadoInscriptoCertificado);
                 $em->persist($inscriptoCertificado);
                 $em->flush();

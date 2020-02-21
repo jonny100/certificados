@@ -202,7 +202,7 @@ final class InscriptoAdminController extends CRUDController
                     $inscriptoER->setInscripto($inscripto);
                     $inscriptoER->setCertificadoEventoRequisito($certificadoEventoRequisito);
                     
-                    $em = $this->getDoctrine()->getEntityManager();
+                    $em = $this->getDoctrine()->getManager();
                     $em->persist($inscriptoER);
                     $em->flush();
                 }

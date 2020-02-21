@@ -28,5 +28,4 @@ return [
     App\Application\ToolsBundle\ApplicationToolsBundle::class => ['all' => true],
     WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle::class => ['all' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
-    //Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle::class => ['all' => true],
 ];
