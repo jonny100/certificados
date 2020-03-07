@@ -65,6 +65,7 @@ security:
         #Accesos externos sin usuario y contraseña
         - { path: ^/admin/app/inscriptocertificado/.*/certificado, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/verificacion$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/*, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.

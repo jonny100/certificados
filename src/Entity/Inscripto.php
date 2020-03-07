@@ -50,7 +50,7 @@ class Inscripto
     /**
      * @var \Persona
      *
-     * @ORM\ManyToOne(targetEntity="Persona")
+     * @ORM\ManyToOne(targetEntity="Persona", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="persona_id", referencedColumnName="id")
      * })

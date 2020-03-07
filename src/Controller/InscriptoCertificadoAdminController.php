@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use App\Entity\CertificadosFile;
 
 use Swift_SmtpTransport;
 use Swift_Mailer;
@@ -24,21 +27,23 @@ final class InscriptoCertificadoAdminController extends CRUDController
      * @abstract Funcion para generar la caratula en pdf
      */
     public function certificadoAction(Request $request){    
+            $em = $this->getDoctrine()->getManager();
             $object = $this->admin->getSubject();
             $id = $request->get($this->admin->getIdParameter());
+            $sinFondo = $this->getRequest()->get('sin_fondo', 'false');
             $inscriptoCertificado = $this->admin->getObject($id);
+            $filelocation = $_SERVER['CERTIFICADOS_FILE'];
+            $pdf = new ReportPDF(); 
+            
+        //SI EL CERTIFICADO YA FUE GENERADO, LO MUESTRO DESDE EL ARCHIVO FISICO, SINO, LO CREO Y LO GUARDO
+        if($inscriptoCertificado->getCertificadoFile() == NULL || $sinFondo == 'true'){
             
 //            if ($inscriptoCertificado->getEstado()->getId() != 2) {
 //                throw new AccessDeniedException();
 //            }
-            
-            $sinFondo = $this->getRequest()->get('sin_fondo', 'false');
-
             if (!$object) {
                 throw new NotFoundHttpException(sprintf('No se pudo encontrar el objeto correspondiente a esta identificación : %s', $id));
             }
-            
-            $pdf = new ReportPDF(); 
             
             $pdf->AddPage('L');
             
@@ -123,12 +128,61 @@ final class InscriptoCertificadoAdminController extends CRUDController
                 $pdf->write2DBarcode( $qr, 'QRCODE,L', 5, 113, 40, 40, $style, 'N');
                 $pdf->writeHTMLCell(0,0, 4, 152, $inscriptoCertificado->getCodigoVerificacion());
             }
-            $file = $pdf->Output('certificado.pdf', 'S');
+            //GENERA PDF Y DESCARGA EN TIEMPO DE EJECUCION
+            //$file = $pdf->Output('certificado.pdf', 'S');
             
-            $response = new Response($file);
+            
+            if ($inscriptoCertificado->getEstado()->getId() == 2 && $sinFondo != 'true') {
+                //GENERA PDF, DESCARGA Y GUARDA EL ARCHIVO EN CARPETA
+                $filename = "certificado" . date('dmYHis') . uniqid() . ".pdf"; 
+
+                $path = $inscriptoCertificado->getInscripto()->getEvento()->getId();
+
+                $fileNL = $filelocation. DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $filename;//Windows
+
+                //COMPRUEBO QUE LA CARPETA DONDE QUIERO GUARDAR EL ARCHIVO, EXISTA.
+                if (!file_exists($filelocation. DIRECTORY_SEPARATOR . $path)) {
+                    mkdir($filelocation. DIRECTORY_SEPARATOR . $path, 0777, true);
+                }
+
+                $pdf->Output($fileNL, 'F');
+
+                $user = $this->getUser();
+                $certificadosFile = new CertificadosFile();
+                $certificadosFile->setMimeType('application/pdf');
+                $certificadosFile->setName($filename);
+                $certificadosFile->setUser($user);
+                $certificadosFile->setPath(strval($path));            
+                $em->persist($certificadosFile);
+
+                $inscriptoCertificado->setCertificadoFile($certificadosFile);
+                $em->persist($inscriptoCertificado);
+
+                $em->flush();
+                $response = new Response($pdf->Output($fileNL, 'S'));
+            }else{
+                $file = $pdf->Output('certificado.pdf', 'S');
+                $response = new Response($file);
+            }
+            
+            
             $response->headers->set('Content-Type', 'application/pdf');
             $response->headers->set('Content-Disposition', 'filename="certificado.pdf"');
-            return $response;
+            
+            
+        }else{
+            $certificadoFile = $inscriptoCertificado->getCertificadoFile();
+            $fileNL = $filelocation. DIRECTORY_SEPARATOR . $certificadoFile->getPath() . DIRECTORY_SEPARATOR . $certificadoFile->getName();
+            
+            $response = new BinaryFileResponse($fileNL);
+            $response->headers->set('Content-Type', $certificadoFile->getMimeType());
+            $response->setContentDisposition(
+                ResponseHeaderBag::DISPOSITION_INLINE,
+                $certificadoFile->getName()
+            );
+        }
+        return $response;
+        
     }
     
     /*public function reemplazarVariables($obj){

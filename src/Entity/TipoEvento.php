@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * TipoEvento
  *
  * @ORM\Table(name="tipo_evento")
  * @ORM\Entity
+ * @ApiResource
  */
 class TipoEvento
 {

@@ -19,3 +19,4 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 /nbproject/private/
+/certificados_file/*

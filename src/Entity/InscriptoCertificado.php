@@ -90,6 +90,16 @@ class InscriptoCertificado
      */
     private $userAutorizador;
     
+    /**
+     * @var \CertificadosFile
+     *
+     * @ORM\ManyToOne(targetEntity="CertificadosFile")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="certificados_file_id", referencedColumnName="id")
+     * })
+     */
+    private $certificado_file;
+    
     
     
     public function __toString() {
@@ -193,6 +203,18 @@ class InscriptoCertificado
     public function setUserAutorizador(?User $userAutorizador): self
     {
         $this->userAutorizador = $userAutorizador;
+
+        return $this;
+    }
+
+    public function getCertificadoFile(): ?CertificadosFile
+    {
+        return $this->certificado_file;
+    }
+
+    public function setCertificadoFile(?CertificadosFile $certificado_file): self
+    {
+        $this->certificado_file = $certificado_file;
 
         return $this;
     }

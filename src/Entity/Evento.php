@@ -5,12 +5,24 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\EventoApiController;
 
 /**
  * Evento
  *
  * @ORM\Table(name="evento", indexes={@ORM\Index(name="fk_evento_tipo_evento1_idx", columns={"tipo_evento_id"})})
  * @ORM\Entity
+ * @ApiResource(
+ *     collectionOperations={
+            "get"={"method"="GET"},
+            "pre_evento"={
+               "path"="/eventos/preevento",
+               "method"="POST",
+               "controller"=EventoApiController::class     
+             }
+   }
+ * )
  */
 class Evento
 {
@@ -89,7 +101,7 @@ class Evento
     /**
      * @var \TipoEvento
      *
-     * @ORM\ManyToOne(targetEntity="TipoEvento")
+     * @ORM\ManyToOne(targetEntity="TipoEvento", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tipo_evento_id", referencedColumnName="id")
      * })
