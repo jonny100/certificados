@@ -232,7 +232,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
         // Create the Transport
         $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
                 ->setUsername('certificadoseie@gmail.com')
-                ->setPassword('wlbgbkfwsssnlgkp')
+                ->setPassword('ojgyxdsbazdbjorn')
         ;
 
         // Create the Mailer using your created Transport

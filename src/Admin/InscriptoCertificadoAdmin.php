@@ -20,6 +20,9 @@ final class InscriptoCertificadoAdmin extends AbstractAdmin
         $em = $this->getModelManager()->getEntityManager('App:EstadoInscriptoCertificado');
         $ec = $em->getReference('App:EstadoInscriptoCertificado', '1');
         $instance->setEstado($ec);
+        $container = $this->getConfigurationPool()->getContainer();
+        $user = $container->get('security.token_storage')->getToken()->getUser();
+        $instance->setUserCreador($user);
 
         return $instance;
     }
@@ -50,6 +53,8 @@ final class InscriptoCertificadoAdmin extends AbstractAdmin
             //->add('id')
             ->add('certificadoEvento')
             ->add('fechaObt', null, array('format' => 'd/m/Y'))
+            ->add('userCreador.ApellidoNombre', null, array('label' => 'Usuario Creador'))
+            ->add('userAutorizador.ApellidoNombre', null, array('label' => 'Usuario Autorizador'))
             ->add('estado')
             //->add('estado')
             ->add('_action', null, [

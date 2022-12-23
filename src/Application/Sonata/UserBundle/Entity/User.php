@@ -28,4 +28,8 @@ class User extends BaseUser
     {
         return $this->id;
     }
+    
+    public function getApellidoNombre() {
+        return $this->lastname . ' ' . $this->firstname;
+    }
 }

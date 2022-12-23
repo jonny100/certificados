@@ -91,6 +91,16 @@ class InscriptoCertificado
     private $userAutorizador;
     
     /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Application\Sonata\UserBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_creador", referencedColumnName="id")
+     * })
+     */
+    private $userCreador;
+    
+    /**
      * @var \CertificadosFile
      *
      * @ORM\ManyToOne(targetEntity="CertificadosFile")
@@ -99,6 +109,8 @@ class InscriptoCertificado
      * })
      */
     private $certificado_file;
+    
+    
     
     
     
@@ -215,6 +227,18 @@ class InscriptoCertificado
     public function setCertificadoFile(?CertificadosFile $certificado_file): self
     {
         $this->certificado_file = $certificado_file;
+
+        return $this;
+    }
+
+    public function getUserCreador(): ?User
+    {
+        return $this->userCreador;
+    }
+
+    public function setUserCreador(?User $userCreador): self
+    {
+        $this->userCreador = $userCreador;
 
         return $this;
     }
