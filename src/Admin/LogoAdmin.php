@@ -43,7 +43,7 @@ final class LogoAdmin extends AbstractAdmin
     {
         $formMapper
             //->add('id')
-            ->add('descripcion')
+            ->add('descripcion', null, array('required' => true))
             ->add('url')
             //->add('estado')
             ;

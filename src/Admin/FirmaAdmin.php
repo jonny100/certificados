@@ -19,7 +19,7 @@ final class FirmaAdmin extends AbstractAdmin
         $datagridMapper
             //->add('id')
             ->add('descripcion')
-            ->add('firma')
+            //->add('firma')
             //->add('estado')
             ;
     }
@@ -44,8 +44,8 @@ final class FirmaAdmin extends AbstractAdmin
     {
         $formMapper
             //->add('id')
-            ->add('descripcion')
-            ->add('firma', CKEditorType::class)
+            ->add('descripcion', null, array('required' => true))
+            //->add('firma', CKEditorType::class)
             ->add('url')
             //->add('estado')
             ;
@@ -56,7 +56,7 @@ final class FirmaAdmin extends AbstractAdmin
         $showMapper
             //->add('id')
             ->add('descripcion')
-            ->add('firma')
+            //->add('firma')
             ->add('url')
             //->add('estado')
             ;
