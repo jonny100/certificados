@@ -10,6 +10,7 @@
 ###< symfony/framework-bundle ###
 
 /public/app/images/firmas/
+/public/app/images/logos/
 
 ###> symfony/phpunit-bridge ###
 .phpunit

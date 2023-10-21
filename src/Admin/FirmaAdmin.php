@@ -48,7 +48,7 @@ final class FirmaAdmin extends AbstractAdmin
 
         // use $fileFormOptions so we can add other options to the field
         $fileFormOptions = ['required' => false, 'label' => 'Archivo'];
-        if ($image->getId() && ($webPath = $image->getWebPath())) {
+        if ($image->getFilename() && ($webPath = $image->getWebPath())) {
             // get the request so the full path to the image can be set
             $request = $this->getRequest();
             $fullPath = $request->getBasePath().'/'.$webPath;

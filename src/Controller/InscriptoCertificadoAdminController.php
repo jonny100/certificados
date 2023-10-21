@@ -96,7 +96,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
             for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
                 $pdf->setPage($i);
                 foreach($inscriptoCertificado->getCertificadoEvento()->getLogo() as $logo){
-                    $img_file = $logo->getLogo()->getUrl();
+                    $img_file = $request->server->get("HTTP_HOST") . '/' . $logo->getLogo()->getWebPath();
                     $pdf->Image($img_file, $logo->getX(), $logo->getY(), $logo->getAncho(), $logo->getAlto(), '', '', '', false, 300, '', false, false, 0);
                 }
             }
