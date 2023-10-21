@@ -88,7 +88,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
             for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
                 $pdf->setPage($i);
                 foreach($inscriptoCertificado->getCertificadoEvento()->getFirma() as $firma){
-                    $img_file = $firma->getFirma()->getUrl();
+                    $img_file = $request->server->get("HTTP_HOST") . '/' . $firma->getFirma()->getWebPath();
                     $pdf->Image($img_file, $firma->getX(), $firma->getY(), $firma->getAncho(), $firma->getAlto(), '', '', '', false, 300, '', false, false, 0);
                 }
             }

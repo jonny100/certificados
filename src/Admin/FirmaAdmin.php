@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 final class FirmaAdmin extends AbstractAdmin
 {
@@ -29,7 +30,7 @@ final class FirmaAdmin extends AbstractAdmin
         $listMapper
             //->add('id')
             ->add('descripcion')
-            ->add('url')
+            //->add('url')
             //->add('estado')
             ->add('_action', null, [
                 'actions' => [
@@ -42,11 +43,27 @@ final class FirmaAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper): void
     {
+        // get the current Image instance
+        $image = $this->getSubject();
+
+        // use $fileFormOptions so we can add other options to the field
+        $fileFormOptions = ['required' => false, 'label' => 'Archivo'];
+        if ($image->getId() && ($webPath = $image->getWebPath())) {
+            // get the request so the full path to the image can be set
+            $request = $this->getRequest();
+            $fullPath = $request->getBasePath().'/'.$webPath;
+
+            // add a 'help' option containing the preview's img tag
+            $fileFormOptions['help'] = '<img src="'.$fullPath.'" class="admin-preview"/>';
+            $fileFormOptions['help_html'] = true;
+        }
+        
         $formMapper
             //->add('id')
             ->add('descripcion', null, array('required' => true))
             //->add('firma', CKEditorType::class)
-            ->add('url')
+            //->add('url')
+            ->add('file', FileType::class, $fileFormOptions)
             //->add('estado')
             ;
     }
@@ -57,8 +74,27 @@ final class FirmaAdmin extends AbstractAdmin
             //->add('id')
             ->add('descripcion')
             //->add('firma')
-            ->add('url')
+            //->add('url')
+            ->add('file', null, array('label' => 'Archivo', 'template' => 'FirmaAdmin/show__firma.html.twig'))
             //->add('estado')
             ;
+    }
+    
+    public function prePersist($object)
+    {
+        $this->manageFileUpload($object);
+    }
+
+    public function preUpdate($object) 
+    {
+        $this->manageFileUpload($object);
+    }
+
+    private function manageFileUpload(object $image): void
+    {
+        if ($image->getFile()) {
+            $image->lifecycleFileUpload();
+            $image->refreshUpdated();
+        }
     }
 }

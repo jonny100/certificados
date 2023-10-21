@@ -9,6 +9,8 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+/public/app/images/firmas/
+
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache
