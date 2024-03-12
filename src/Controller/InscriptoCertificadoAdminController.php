@@ -71,7 +71,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
                     // set bacground image
                     for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
                         $pdf->setPage($i);
-                        $img_file = $this->getParameter('kernel.project_dir') . '/public/bundles/images/imagencertificado.jpg';
+                        $img_file = $this->getParameter('kernel.project_dir') . '/public/app/images/imagencertificado.jpg';
                         $pdf->Image($img_file, 0, 0, 300, 210, '', '', '', false, 300, '', false, false, 0);
                     }
                 }
@@ -79,7 +79,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
                 // set bacground image
                 for ($i = 1; $i <= $pdf->getNumPages(); $i++) {
                     $pdf->setPage($i);
-                    $img_file = $this->getParameter('kernel.project_dir') . '/public/bundles/images/imagencertificadoBorrador.jpg';
+                    $img_file = $this->getParameter('kernel.project_dir') . '/public/app/images/imagencertificadoBorrador.jpg';
                     $pdf->Image($img_file, 0, 0, 300, 210, '', '', '', false, 300, '', false, false, 0);
                 }
             }    
