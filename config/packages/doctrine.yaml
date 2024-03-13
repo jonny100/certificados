@@ -1,11 +1,11 @@
 doctrine:
     dbal:
-        driver: 'pdo_pgsql'
-        server_version: '13'
-        charset: UTF8
+        driver: 'pdo_mysql'
+        server_version: '5.7'
+        charset: utf8mb4
         default_table_options:
-            charset: utf8
-            collate: utf8_general_ci
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
 
         url: '%env(resolve:DATABASE_URL)%'
 
