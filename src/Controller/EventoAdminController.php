@@ -141,8 +141,10 @@ final class EventoAdminController extends CRUDController
             $text = $this->reemplazarVariables($inscriptoCertificado);
 
             $pdf->writeHTMLCell(0,0, 110, 30, $text, 0, 0, 0, true,"L", 0);
-            $pdf->write2DBarcode( $qr, 'QRCODE,L', 5, 113, 40, 40, $style, 'N');
-            $pdf->writeHTMLCell(0,0, 4, 152, $inscriptoCertificado->getCodigoVerificacion());
+            $pdf->write2DBarcode( $qr, 'QRCODE,L', 5, 105, 40, 40, $style, 'N');
+            $pdf->writeHTMLCell(0,0, 4, 145, $inscriptoCertificado->getCodigoVerificacion());
+            $pdf->writeHTMLCell(0,0, 4, 150, $inscriptoCertificado->getInscripto()->getPersona()->getDNI() . ' ' .
+                $inscriptoCertificado->getInscripto()->getPersona()->getApellidoNombre());
         }
         
         $file = $pdf->Output('certificado.pdf', 'I');

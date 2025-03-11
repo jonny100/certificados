@@ -26,7 +26,7 @@ class TipoCertificado
      *
      * @ORM\Column(name="descripcion", type="string", length=45, nullable=true, options={"default"="NULL"})
      */
-    private $descripcion = 'NULL';
+    private $descripcion;
 
     /**
      * @var int|null

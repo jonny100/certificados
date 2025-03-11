@@ -84,7 +84,7 @@ final class InscriptoCertificadoAdmin extends AbstractAdmin
                     'class' => 'App\Entity\CertificadoEvento',
                     'required' => true
                         ))
-            ->add('fechaObt', DatePickerType::class, array('format' => 'dd/M/yyyy'))
+            ->add('fechaObt', DatePickerType::class, array('format' => 'dd/M/yyyy', 'required' => false))
             //->add('estado')
             ;
     }

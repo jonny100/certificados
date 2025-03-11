@@ -88,12 +88,17 @@ class InscriptoCertificadoSubscriber implements EventSubscriber {
         $correspondiente = $obj->getCertificadoEvento()->getEvento()->getCorrespondiente();
         $resolucion = $obj->getCertificadoEvento()->getEvento()->getResolucion();
         $horas = $obj->getCertificadoEvento()->getEvento()->getHoras();
-        
-        $fechaObt = $obj->getFechaObt();
-        $dia = $fechaObt->format('d');
-        setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
-        $mes = ucwords(iconv('ISO-8859-2', 'UTF-8', strftime("%B", $fechaObt->getTimestamp())));
-        $anio = $fechaObt->format('Y');
+
+        $dia = "";
+        $mes = "";
+        $anio = "";
+        if ($obj->getFechaObt()) {
+            $fechaObt = $obj->getFechaObt();
+            $dia = $fechaObt->format('d');
+            setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
+            $mes = ucwords(iconv('ISO-8859-2', 'UTF-8', strftime("%B", $fechaObt->getTimestamp())));
+            $anio = $fechaObt->format('Y');
+        }
         
         $template = null !== $obj->getCertificadoEvento()->getTemplate() ? $obj->getCertificadoEvento()->getTemplate()->getCodigo() : '';  
         $template = str_replace('#el-la#', $el_la, $template);

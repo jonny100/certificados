@@ -35,6 +35,7 @@ final class InscriptoAdmin extends AbstractAdmin
     {
         $listMapper
             //->add('id')
+            ->add('persona.dni', null, array('label' => 'DNI'))
             ->add('persona')
             ->add('legajo')
             ->add('fechaInsc', null, array('format' => 'd/m/Y'))
@@ -56,7 +57,7 @@ final class InscriptoAdmin extends AbstractAdmin
             //->add('id')
             ->add('persona', ModelListType::class)
             ->add('legajo')
-            ->add('fechaInsc', DatePickerType::class, array('format' => 'dd/M/yyyy'))
+            ->add('fechaInsc', DatePickerType::class, array('format' => 'dd/M/yyyy', 'required' => false))
             //->add('estado')
             ;
     }

@@ -64,7 +64,7 @@ final class PersonaAdmin extends AbstractAdmin
                         'required'  => false,
                         'label' => 'Genero'   
                     ))
-            ->add('fechaNac', DatePickerType::class, array('format' => 'dd/M/yyyy'))
+            ->add('fechaNac', DatePickerType::class, array('format' => 'dd/M/yyyy', 'required' => false))
             //->add('estado')
             ;
     }
