@@ -92,6 +92,7 @@ services:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Inscripto }
         public: true
         calls:
+            - [ setTemplate, [ 'list', 'InscriptoAdmin/list.html.twig' ] ]
             - [ addChild, ["@admin.inscripto_evento_requisito"]] 
             - [ addChild, ["@admin.inscripto_certificado"]] 
 

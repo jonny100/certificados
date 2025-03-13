@@ -1,0 +1,26 @@
+{% extends '@SonataAdmin/CRUD/base_list.html.twig' %}
+
+{%- block actions -%}
+    {% apply spaceless %}
+        {% for item in admin.getActionButtons(action, (object is defined) ? object : null) %}
+            {% if item.template is defined %}
+                {% include item.template %}
+            {% endif %}
+        {% endfor %}
+    {% endapply %}
+{%- endblock -%}
+
+{% block navbar_title %}
+<div>
+    {{ parent() }}
+
+    {% if admin.isGranted('CREATE') %}
+        {% set eventId = app.request.attributes.get('id') %}
+        <a class="navbar-brand btn btn-info" href="{{ path('admin_app_inscripto_importarInscriptosCSV', {'id': eventId}) }}" style="margin-left: 20px;">
+            <b><i class="fa fa-upload"></i> Importar CSV</b>
+        </a>
+    {% endif %}
+
+
+</div>
+{% endblock %}

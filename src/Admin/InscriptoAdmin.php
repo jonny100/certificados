@@ -8,17 +8,22 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\DatePickerType;
 use Sonata\AdminBundle\Form\Type\ModelListType;
-use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 
 final class InscriptoAdmin extends AbstractAdmin
 {
     public function  configure()
     {
+        unset($this->listModes['mosaic']);
         $this->parentAssociationMapping = 'evento';
-    } 
+    }
+
+    protected function configureRoutes(RouteCollection $collection) {
+        $collection->add('importarInscriptosCSV', $this->getRouterIdParameter() . '/importarInscriptosCSV');
+    }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {

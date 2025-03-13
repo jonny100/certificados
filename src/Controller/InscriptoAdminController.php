@@ -4,8 +4,18 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Application\Sonata\UserBundle\Entity\User;
+use App\Entity\CertificadoEvento;
+use App\Entity\EstadoInscriptoCertificado;
+use App\Entity\Evento;
+use App\Entity\Inscripto;
+use App\Entity\InscriptoCertificado;
+use App\Entity\Persona;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Inflector\Inflector;
@@ -225,5 +235,153 @@ final class InscriptoAdminController extends CRUDController
                 'filter' => $this->admin->getFilterParameters()
             ])
         );
+    }
+
+    public function importarInscriptosCSVAction(Request $request)
+    {
+        $eventoId = $request->get('id');
+        $repository = $this->getDoctrine()->getRepository('App:Evento');
+        /** @var Evento $evento */
+        $evento = $repository->find($eventoId);
+
+        $form = $this->createFormBuilder()//()
+        ->add('file', FileType::class, ['label' => 'CSV de inscriptos', 'required' => true])
+        ->add('procesar', SubmitType::class, array('label' => 'Importar', "attr" => array('class' => "btn btn-primary")))
+        ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $file */
+            $file = $form->get('file')->getData();
+
+            if ($file->getClientOriginalExtension() !== 'csv') {
+                $this->addFlash('danger', 'El archivo debe ser un CSV.');
+                return $this->redirectToRoute('admin_app_inscripto_importarInscriptosCSV', ['id' => $eventoId]);
+            }
+
+            $handle = fopen($file->getPathname(), 'r');
+            if (!$handle) {
+                $this->addFlash('danger', 'No se pudo abrir el archivo CSV.');
+                return $this->redirectToRoute('admin_app_inscripto_importarInscriptosCSV', ['id' => $eventoId]);
+            }
+
+            $header = fgetcsv($handle, 0, ';');
+            $header = array_map(function ($value) {
+                // Eliminar BOM (si existe) y luego aplicar trim para quitar espacios en blanco
+                $value = preg_replace('/^\xEF\xBB\xBF/', '', $value);
+                return trim($value);
+            }, $header);
+            if (!$header || count($header) !== 2 || $header[0] !== 'DNI' || $header[1] !== 'Apellido y nombre') {
+                fclose($handle);
+                $this->addFlash('danger', 'El formato del CSV no es válido. La primera fila debe contener: DNI;Apellido y nombre.');
+                return $this->redirectToRoute('admin_app_inscripto_importarInscriptosCSV', ['id' => $eventoId]);
+            }
+
+            $inscriptos = [];
+            while (($row = fgetcsv($handle, 0, ';')) !== false) {
+                if (count($row) !== 2) {
+                    continue;
+                }
+
+                [$dni, $nombreCompleto] = $row;
+
+                // Validar DNI (número positivo y sin letras)
+                if (!ctype_digit($dni) || intval($dni) <= 0) {
+                    continue;
+                }
+
+                $inscriptos[] = [
+                    'dni' => $dni,
+                    'nombreCompleto' => $nombreCompleto,
+                ];
+
+            }
+
+            fclose($handle);
+
+            $certificados = $evento->getCertificados();
+
+            // Filtrar el certificado con la descripción "CERTIFICADO EN BLANCO"
+            /** @var CertificadoEvento $certificadoEnBlanco */
+            $certificadoEnBlanco = null;
+            foreach ($certificados as $certificado) {
+                if ($certificado->getCertificado()->getDescripcion() === "CERTIFICADO EN BLANCO") {
+                    $certificadoEnBlanco = $certificado;
+                    break;
+                }
+            }
+
+            if(!$certificadoEnBlanco){
+                $this->addFlash('danger', 'El evento no tiene un CERTIFICADO EN BLANCO.');
+                return $this->redirectToRoute('admin_app_inscripto_importarInscriptosCSV', ['id' => $eventoId]);
+            }
+
+            foreach ($inscriptos as $inscripto) {
+                $this->generarInscriptoDesdeCSV($inscripto, $evento, $certificadoEnBlanco);
+            }
+
+            if (empty($inscriptos)) {
+                $this->addFlash('warning', 'No se encontraron registros válidos en el CSV.');
+            } else {
+                $this->addFlash('success', count($inscriptos) . ' inscriptos procesados correctamente.');
+            }
+
+            return $this->redirectToRoute('admin_app_inscripto_importarInscriptosCSV', ['id' => $eventoId]);
+
+        }
+
+        $vars = array(
+            'action' => 'importarinscriptoscsv',
+            'evento' => $evento,
+            'form' => $form->createView(),
+        );
+
+        return $this->render('InscriptoAdmin\importarInscriptosCSV.html.twig', $vars);
+    }
+
+    private function generarInscriptoDesdeCSV($inscripto, Evento $evento, CertificadoEvento $certificadoEnBlanco)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository('App:Persona');
+        $persona = $repository->findOneBy(array('dni' => $inscripto['dni']));
+
+        if(!$persona){
+            $persona = new Persona();
+            $persona->setDni($inscripto['dni']);
+            $persona->setApellidoNombre($inscripto['nombreCompleto']);
+
+            $em->persist($persona);
+            $em->flush();
+        }
+
+        $inscriptoExistente = $em->getRepository(Inscripto::class)->findOneBy([
+            'persona' => $persona,
+            'evento' => $evento
+        ]);
+
+        if ($inscriptoExistente) {
+            $this->addFlash('info', $persona . 'Ya se encuentra inscripta en este evento.');
+            return;
+        }
+
+        $inscripto = new Inscripto();
+        $inscripto->setPersona($persona);
+
+        $inscriptoCertificado = new InscriptoCertificado();
+        $inscriptoCertificado->setCertificadoEvento($certificadoEnBlanco);
+        $estadoAutorizado = $em->getRepository(EstadoInscriptoCertificado::class)->find(2);
+        $inscriptoCertificado->setEstado($estadoAutorizado);
+        $userCreadorAutorizador = $em->getRepository(User::class)->find(1);
+        $inscriptoCertificado->setUserCreador($userCreadorAutorizador);
+        $inscriptoCertificado->setUserAutorizador($userCreadorAutorizador);
+
+        $inscripto->addCertificado($inscriptoCertificado);
+
+        $evento->addInscripto($inscripto);
+
+        $em->persist($evento);
+        $em->flush();
+
     }
 }

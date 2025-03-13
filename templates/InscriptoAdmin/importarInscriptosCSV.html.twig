@@ -1,0 +1,43 @@
+{% extends base_template %}
+
+{% block sonata_admin_content %}
+    {% block notice %}
+        {% include 'SonataCoreBundle:FlashMessage:render.html.twig' %}
+    {% endblock notice %}
+
+    <div class="sonata-ba-form">
+        <div class="box box-success">
+            <div class="box-header">
+                <h4 class="box-title"></h4>
+            </div>
+
+            <div class="box-body">
+                <div class="formulario">
+                    {{ form_start(form) }}
+                    {{ form_row(form.file) }}
+
+                    <div class="form-group row g-0">
+                        <div class="col-sm-1 mb-0">
+                            {{ form_widget(form.procesar, {'attr': {'class': 'btn btn-primary w-100'}}) }}
+                        </div>
+
+                        <div class="col-sm-1 mb-0">
+                            <a href="{{ path('admin_app_evento_inscripto_list', {'id': evento.id}) }}" class="btn btn-danger w-100">
+                                Volver
+                            </a>
+                        </div>
+
+                        <div class="col-sm-1 mb-0">
+                            <a href="{{ asset('app/ejemploInscriptos.csv') }}" class="btn btn-warning w-100">
+                                Descargar ejemplo
+                            </a>
+                        </div>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+{% endblock %}
