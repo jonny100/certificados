@@ -65,6 +65,8 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Template }
         public: true
+        calls:
+            - [ setTemplate, [ 'edit', 'TemplateAdmin/edit.html.twig' ] ]
 
     admin.certificado_evento:
         class: App\Admin\CertificadoEventoAdmin

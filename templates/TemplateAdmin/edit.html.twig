@@ -1,0 +1,16 @@
+{% extends '@SonataAdmin/CRUD/base_edit.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            // Verificar periódicamente si el div está presente
+            var checkExist = setInterval(function() {
+                if ($('#cke_notifications_area_{{ admin.uniqid }}_codigo').length) {
+                    $('#cke_notifications_area_{{ admin.uniqid }}_codigo').remove();
+                    clearInterval(checkExist);
+                }
+            }, 100); // Verificar cada 100ms
+        });
+    </script>
+{% endblock %}

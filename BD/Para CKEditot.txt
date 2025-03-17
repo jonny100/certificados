@@ -1,0 +1,5 @@
+instalacion de ckeditor
+
+- composer install (composer require friendsofsymfony/ckeditor-bundle 2.4.0)
+- php bin/console ckeditor:install --tag=4.22.1 (drop)
+- php bin/console assets:install public
