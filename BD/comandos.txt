@@ -1,0 +1,11 @@
+comandos para actualizar el sistema.
+git pull
+php bin/console cache:clear
+EN LA RAIZ DEL PROYECTO
+chown -R www-data:www-data var
+chmod -R 775 var
+SI HAY CAMBIOS EN BASE DE DATOS
+php bin/console doctrine:schema:update --force
+SI HAY CAMBIOS EN LIBRERIAS EXTERNAS
+composer install
+SI HAY CAMBIOS EN EL ARCHIVO .env, PASARLOS AL ARCHIVO .env.local CON LOS VALORES QUE CORRESPONDAN
