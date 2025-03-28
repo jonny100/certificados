@@ -63,7 +63,7 @@ security:
         - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         #Accesos externos sin usuario y contraseña
-        - { path: ^/admin/app/inscriptocertificado/.*/certificado, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/app/inscriptocertificado/certificado/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/verificacion$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/*, role: IS_AUTHENTICATED_ANONYMOUSLY }
 

@@ -30,6 +30,7 @@ final class InscriptoCertificadoAdmin extends AbstractAdmin
     protected function configureRoutes(RouteCollection $collection) {               
         $collection->add('certificado', $this->getRouterIdParameter() . '/certificado');
         $collection->add('enviarcertificadomail', $this->getRouterIdParameter() . '/enviarcertificadomail');
+        $collection->add('certificadoDescarga', 'certificado/{codigo}');
     }
     
     public function  configure()

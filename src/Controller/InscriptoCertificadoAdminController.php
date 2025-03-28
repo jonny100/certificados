@@ -224,6 +224,8 @@ final class InscriptoCertificadoAdminController extends CRUDController
     
     public function enviarCertificadoMailAction(Request $request)
     {
+        $mailer = $this->get('mailer');
+
         $object = $this->admin->getSubject();
         $id = $request->get($this->admin->getIdParameter());
         $inscriptoCertificado = $this->admin->getObject($id);  
@@ -231,27 +233,18 @@ final class InscriptoCertificadoAdminController extends CRUDController
         if ($inscriptoCertificado->getEstado()->getId() != 2) {
             throw new AccessDeniedException();
         }
-        // Create the Transport
-        $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
-                ->setUsername('certificadoseie@gmail.com')
-                ->setPassword('ojgyxdsbazdbjorn')
-        ;
-
-        // Create the Mailer using your created Transport
-        $mailer = new Swift_Mailer($transport);
-
-
 
         $mail = $inscriptoCertificado->getInscripto()->getPersona()->getEmail();
-        if (isset($mail)){
-            $url = $request->getSchemeAndHttpHost() . $this->generateUrl('admin_app_inscriptocertificado_certificado', array('id' => $object->getId()));        
+
+        if ($mail){
+            $url = $request->getSchemeAndHttpHost() . $this->admin->generateUrl('certificadoDescarga', ['codigo' => $object->getCodigoVerificacion()]);
             $evento = $inscriptoCertificado->getInscripto()->getEvento();
+
             $message = (new \Swift_Message('Certificado del evento ' . $evento))
-                ->setFrom('certificadoseie@gmail.com')
+                ->setFrom('sicert-eie@eie.unse.edu.ar')
                 ->setTo($mail)
                 ->setBody(
                     $this->renderView(
-                        // templates/emails/registration.html.twig
                         'emails/descargarCertificado.html.twig',
                         ['url' => $url]
                     ),
@@ -259,7 +252,7 @@ final class InscriptoCertificadoAdminController extends CRUDController
                 )
             ;
 
-            $mailer->send($message); //todo
+            $mailer->send($message);
             $this->addFlash('sonata_flash_success', 'Se envió correctamente el mail a: ' . $mail);
         }else{
             $this->addFlash('sonata_flash_error', 'El inscripto ' . $object->getInscripto() . ' no tiene un mail cargado');
@@ -267,6 +260,23 @@ final class InscriptoCertificadoAdminController extends CRUDController
 
         $url = $this->generateUrl('admin_app_inscripto_inscriptocertificado_list', array('id' => $object->getInscripto()->getId()));
         return new RedirectResponse($url);
+    }
+
+    public function certificadoDescargaAction($codigo, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('App:InscriptoCertificado');
+        $inscriptoCertificado = $repository->findOneBy(array('codigoVerificacion' => $codigo, 'estado' => 2));
+
+        if (!$inscriptoCertificado) {
+            throw $this->createNotFoundException('Certificado no encontrado.');
+        }
+
+        $id = $inscriptoCertificado->getId();
+        $requestModificado = clone $request;
+        $requestModificado->attributes->set($this->admin->getIdParameter(), $id);
+
+        return $this->certificadoAction($requestModificado);
     }
 
 }
