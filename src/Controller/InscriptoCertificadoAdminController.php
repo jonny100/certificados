@@ -10,6 +10,7 @@ use App\Application\ReportBundle\Report\ReportPDF;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -27,23 +28,20 @@ final class InscriptoCertificadoAdminController extends CRUDController
      * @abstract Funcion para generar la caratula en pdf
      */
     public function certificadoAction(Request $request){    
-            $em = $this->getDoctrine()->getManager();
-            $object = $this->admin->getSubject();
-            $id = $request->get($this->admin->getIdParameter());
-            $sinFondo = $this->getRequest()->get('sin_fondo', 'false');
-            $inscriptoCertificado = $this->admin->getObject($id);
-            $filelocation = $_SERVER['CERTIFICADOS_FILE'];
-            $pdf = new ReportPDF(); 
+        $em = $this->getDoctrine()->getManager();
+        //$object = $this->admin->getSubject();
+        $id = $request->get($this->admin->getIdParameter());
+        $sinFondo = $this->getRequest()->get('sin_fondo', 'false');
+        $inscriptoCertificado = $this->admin->getObject($id);
+        $filelocation = $_SERVER['CERTIFICADOS_FILE'];
+        $pdf = new ReportPDF();
+
+        if (!$inscriptoCertificado) {
+            throw new NotFoundHttpException(sprintf('No se pudo encontrar el objeto correspondiente a esta identificación : %s', $id));
+        }
             
         //SI EL CERTIFICADO YA FUE GENERADO, LO MUESTRO DESDE EL ARCHIVO FISICO, SINO, LO CREO Y LO GUARDO
         if($inscriptoCertificado->getCertificadoFile() == NULL || $sinFondo == 'true'){
-            
-//            if ($inscriptoCertificado->getEstado()->getId() != 2) {
-//                throw new AccessDeniedException();
-//            }
-            if (!$object) {
-                throw new NotFoundHttpException(sprintf('No se pudo encontrar el objeto correspondiente a esta identificación : %s', $id));
-            }
             
             $pdf->AddPage('L');
             
