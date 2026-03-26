@@ -25,6 +25,7 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\Form\FormView;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -245,6 +246,14 @@ final class InscriptoAdminController extends CRUDController
         $evento = $repository->find($eventoId);
 
         $form = $this->createFormBuilder()//()
+        ->add('certificadoEvento',  EntityType::class, array('label' => 'Certificado',
+            'query_builder' => function ($repository)use($evento) {
+                return $repository->createQueryBuilder('c')
+                        ->where('c.evento = :evento')->setParameter('evento', $evento); //SOLAMENTE MUESTRO LOS CERTIFICADOS DEL EVENTO
+            },
+            'class' => 'App\Entity\CertificadoEvento',
+            'required' => true
+        ))
         ->add('file', FileType::class, ['label' => 'CSV de inscriptos', 'required' => true])
         ->add('procesar', SubmitType::class, array('label' => 'Importar', "attr" => array('class' => "btn btn-primary")))
         ->getForm();
@@ -252,6 +261,8 @@ final class InscriptoAdminController extends CRUDController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $params = $form->getData();
+            
             /** @var UploadedFile $file */
             $file = $form->get('file')->getData();
 
@@ -300,25 +311,10 @@ final class InscriptoAdminController extends CRUDController
 
             fclose($handle);
 
-            $certificados = $evento->getCertificados();
-
-            // Filtrar el certificado con la descripción "CERTIFICADO EN BLANCO"
-            /** @var CertificadoEvento $certificadoEnBlanco */
-            $certificadoEnBlanco = null;
-            foreach ($certificados as $certificado) {
-                if ($certificado->getCertificado()->getDescripcion() === "CERTIFICADO EN BLANCO") {
-                    $certificadoEnBlanco = $certificado;
-                    break;
-                }
-            }
-
-            if(!$certificadoEnBlanco){
-                $this->addFlash('danger', 'El evento no tiene un CERTIFICADO EN BLANCO.');
-                return $this->redirectToRoute('admin_app_inscripto_importarInscriptosCSV', ['id' => $eventoId]);
-            }
+            $certificado = $params['certificadoEvento'];
 
             foreach ($inscriptos as $inscripto) {
-                $this->generarInscriptoDesdeCSV($inscripto, $evento, $certificadoEnBlanco);
+                $this->generarInscriptoDesdeCSV($inscripto, $evento, $certificado);
             }
 
             if (empty($inscriptos)) {
