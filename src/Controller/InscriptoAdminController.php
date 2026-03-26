@@ -313,6 +313,11 @@ final class InscriptoAdminController extends CRUDController
 
             $certificado = $params['certificadoEvento'];
 
+            if (empty($certificado)) {
+                $this->addFlash('danger', 'Debe seleccionar un certificado.');
+                return $this->redirectToRoute('admin_app_inscripto_importarInscriptosCSV', ['id' => $eventoId]);
+            }
+
             foreach ($inscriptos as $inscripto) {
                 $this->generarInscriptoDesdeCSV($inscripto, $evento, $certificado);
             }
